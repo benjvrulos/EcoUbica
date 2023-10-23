@@ -1,4 +1,4 @@
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import styles from "./Map.module.css";
 import {
   MapContainer,
@@ -13,6 +13,9 @@ import { useCities } from "../contexts/CitiesContext";
 import { useGeolocation } from "../hooks/useGeoLocation";
 import Button from "./Button";
 import { useUrlPosition } from "../hooks/useUrlPosition";
+
+const BASE_URL = "https://maps.googleapis.com/maps/api/geocode/json";
+const API_KEY = "AIzaSyCi1tocSc75FiVUB1IfbnGd0QVnjXPxzjU";
 
 function Map() {
   const { cities } = useCities();
@@ -81,10 +84,24 @@ function ChangeCenter({ position }) {
   return null;
 }
 
+// Returns the estimate place with parameters lat and lng
+async function fetchReverseGeocoding(lat, lng) {
+  const response = await fetch(
+    `${BASE_URL}?latlng=${lat},${lng}&result_type=street_address&key=${API_KEY}`
+  );
+  const data = await response.json();
+  console.log(data);
+}
+
 function DetectClick() {
   const navigate = useNavigate();
   useMapEvents({
-    click: (e) => navigate(`form?lat=${e.latlng.lat}&lng=${e.latlng.lng}`),
+    click: (e) => {
+      const lat = e.latlng.lat;
+      const lng = e.latlng.lng;
+      fetchReverseGeocoding(lat, lng);
+      navigate(`form?reverse=${true}&lat=${lat}&lng=${lng}`);
+    },
   });
 }
 export default Map;

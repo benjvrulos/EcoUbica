@@ -9,6 +9,7 @@ import Spinner from "./Spinner";
 import BackButton from "./BackButton";
 import { AutoComplete } from "./AutoComplete";
 import { useUrlPosition } from "../hooks/useUrlPosition";
+import { useSearchParams } from "react-router-dom";
 
 export function convertToEmoji(countryCode) {
   const codePoints = countryCode
@@ -22,6 +23,7 @@ const BASE_URL = "https://api.bigdatacloud.net/data/reverse-geocode-client";
 
 function Form() {
   const [lat, lng] = useUrlPosition();
+  const [searchParams, setSearchParams] = useSearchParams();
   const [isLoadingGeocoding, setIsLoadingGeocoding] = useState(false);
   const [cityName, setCityName] = useState("");
   const [country, setCountry] = useState("");
@@ -29,7 +31,7 @@ function Form() {
   const [notes, setNotes] = useState("");
   const [emoji, setEmoji] = useState("");
   const [geoCodingError, setGeoCodingError] = useState("");
-
+  console.log(searchParams.get("reverse"));
   // useEffect(
   //   function () {
   //     async function fetchCityData() {
