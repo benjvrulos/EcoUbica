@@ -19,11 +19,12 @@ export function convertToEmoji(countryCode) {
   return String.fromCodePoint(...codePoints);
 }
 
-const BASE_URL = "https://api.bigdatacloud.net/data/reverse-geocode-client";
+const BASE_URL = "https://maps.googleapis.com/maps/api/geocode/json";
+const API_KEY = "AIzaSyCi1tocSc75FiVUB1IfbnGd0QVnjXPxzjU";
 
 function Form() {
   const [lat, lng] = useUrlPosition();
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
   const [isLoadingGeocoding, setIsLoadingGeocoding] = useState(false);
   const [cityName, setCityName] = useState("");
   const [country, setCountry] = useState("");
@@ -31,39 +32,40 @@ function Form() {
   const [notes, setNotes] = useState("");
   const [emoji, setEmoji] = useState("");
   const [geoCodingError, setGeoCodingError] = useState("");
-  console.log(searchParams.get("reverse"));
-  // useEffect(
-  //   function () {
-  //     async function fetchCityData() {
-  //       try {
-  //         setIsLoadingGeocoding(true);
-  //         setGeoCodingError("");
-  //         const res = await fetch(
-  //           `${BASE_URL}?latitude=${lat}&longitude=${lng}`
-  //         );
-  //         const data = await res.json();
 
-  //         if (!data.countryCode)
-  //           throw new Error(
-  //             "That doesn´t seem to be a city. Click somewhere else 😉"
-  //           );
-  //         setCityName(data.city || data.locality || "");
-  //         setCountry(data.countryName);
-  //         setEmoji(convertToEmoji(data.countryCode));
-  //       } catch (err) {
-  //         setGeoCodingError(err.message);
-  //       } finally {
-  //         setIsLoadingGeocoding(false);
-  //       }
-  //     }
-  //     fetchCityData();
-  //   },
-  //   [lat, lng]
-  // );
+  useEffect(
+    function () {
+      if (searchParams.get("reverse")) {
+        async function fetchReverseGeocoding() {
+          try {
+            setIsLoadingGeocoding(true);
+            setGeoCodingError("");
+            const response = await fetch(
+              `${BASE_URL}?latlng=${lat},${lng}&result_type=street_address&key=${API_KEY}`
+            );
+            const data = await response.json();
+            console.log(data);
+            // if (!data.countryCode)
+            //   throw new Error(
+            //     "That doesn´t seem to be a city. Click somewhere else 😉"
+            //   );
+
+            setCityName(data.results[1].formatted_address);
+          } catch (err) {
+            setGeoCodingError(err.message);
+          } finally {
+            setIsLoadingGeocoding(false);
+          }
+        }
+        fetchReverseGeocoding();
+      }
+    },
+    [lat, lng, searchParams]
+  );
 
   if (isLoadingGeocoding) return <Spinner />;
   if (geoCodingError) return <Message message={geoCodingError} />;
-  console.log(cityName);
+
   return (
     <form className={styles.form}>
       <div className={styles.row}>

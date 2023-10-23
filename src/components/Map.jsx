@@ -19,7 +19,7 @@ const API_KEY = "AIzaSyCi1tocSc75FiVUB1IfbnGd0QVnjXPxzjU";
 
 function Map() {
   const { cities } = useCities();
-  const [mapPosition, setMapPostion] = useState([40, 0]);
+  const [mapPosition, setMapPostion] = useState([-33.5000852, -70.6162928]);
   const {
     isLoading: isLoadingPosition,
     position: geolocationPosition,
@@ -90,7 +90,6 @@ async function fetchReverseGeocoding(lat, lng) {
     `${BASE_URL}?latlng=${lat},${lng}&result_type=street_address&key=${API_KEY}`
   );
   const data = await response.json();
-  console.log(data);
 }
 
 function DetectClick() {
@@ -99,7 +98,6 @@ function DetectClick() {
     click: (e) => {
       const lat = e.latlng.lat;
       const lng = e.latlng.lng;
-      fetchReverseGeocoding(lat, lng);
       navigate(`form?reverse=${true}&lat=${lat}&lng=${lng}`);
     },
   });
