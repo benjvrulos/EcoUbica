@@ -1,14 +1,24 @@
 {
   "puntosLimpios": [
     {
-      "address": " Av. Vicuña Mackenna 4917, 8970117 San Joaquín, Región Metropolitana",
-      "tipoPunto": "Basural",
+      "address": " Av. Vicuña Mackenna 4917, San Joaquín, Región Metropolitana",
+      "tipoPunto": "Reciclaje",
       "position": {
         "lat": -33.5000852,
         "lng": -70.6162928
       },
-      "descripcion": "Punto de Reciclaje que se encuentra dentro del la sede Duoc San Joaquín",
+      "descripcion": "Punto de Reciclaje que se encuentra dentro de la sede Duoc San Joaquín",
       "id": 32132
+    },
+    {
+      "address": "Marathon 5300, Macul, Región Metropolitana",
+      "tipoPunto": "Basural",
+      "position": {
+        "lat": -33.5064695,
+        "lng": -70.60654
+      },
+      "descripcion": "Basural dentro del Estadio Monumental",
+      "id": 2324
     }
   ]
 }

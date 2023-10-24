@@ -8,7 +8,7 @@ import PageNotFound from "./pages/PageNotFound";
 import AppLayout from "./pages/AppLayout";
 import ReciclajeList from "./components/ReciclajeList";
 import CountryList from "./components/CountryList";
-import City from "./components/City";
+import City from "./components/Reciclaje";
 import Form from "./components/Form";
 import { CitiesProvider } from "./contexts/CitiesContext";
 

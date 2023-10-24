@@ -1,4 +1,4 @@
-import CityItem from "./CityItem";
+import CityItem from "./ReciclajeItem";
 import styles from "./ReciclajeList.module.css";
 import Spinner from "./Spinner";
 import Message from "./Message";

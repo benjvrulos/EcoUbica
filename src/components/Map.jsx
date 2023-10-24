@@ -17,7 +17,7 @@ import { useUrlPosition } from "../hooks/useUrlPosition";
 
 function Map() {
   const { cities } = useCities();
-  console.log(cities[0]?.tipoPunto);
+
   const [tempMarker, setTempMarker] = useState([]);
   const [mapPosition, setMapPostion] = useState([-33.5000852, -70.6162928]);
 
