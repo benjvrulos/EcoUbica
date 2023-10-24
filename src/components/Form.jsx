@@ -26,16 +26,16 @@ function Form() {
   const [lat, lng] = useUrlPosition();
   const [searchParams] = useSearchParams();
   const [isLoadingGeocoding, setIsLoadingGeocoding] = useState(false);
-  const [cityName, setCityName] = useState("");
-  const [country, setCountry] = useState("");
-  const [date, setDate] = useState(new Date());
+  const [address, setAddress] = useState("");
+
   const [notes, setNotes] = useState("");
-  const [emoji, setEmoji] = useState("");
+
   const [geoCodingError, setGeoCodingError] = useState("");
 
   useEffect(
     function () {
       if (searchParams.get("reverse")) {
+        // Returns the estimate place with parameters lat and lng
         async function fetchReverseGeocoding() {
           try {
             setIsLoadingGeocoding(true);
@@ -44,13 +44,13 @@ function Form() {
               `${BASE_URL}?latlng=${lat},${lng}&result_type=street_address&key=${API_KEY}`
             );
             const data = await response.json();
-            console.log(data);
+
             // if (!data.countryCode)
             //   throw new Error(
             //     "That doesn´t seem to be a city. Click somewhere else 😉"
             //   );
 
-            setCityName(data.results[1].formatted_address);
+            setAddress(data.results[1].formatted_address);
           } catch (err) {
             setGeoCodingError(err.message);
           } finally {
@@ -69,21 +69,20 @@ function Form() {
   return (
     <form className={styles.form}>
       <div className={styles.row}>
-        <label htmlFor="cityName">Direccion</label>
-        <AutoComplete onAdress={setCityName} address={cityName} />
+        <label htmlFor="cityName">Dirección</label>
+        <AutoComplete onAdress={setAddress} address={address} />
       </div>
 
       <div className={styles.row}>
-        <label htmlFor="date">When did you go to {cityName}?</label>
-        <input
-          id="date"
-          onChange={(e) => setDate(e.target.value)}
-          value={date}
-        />
+        <label htmlFor="date">Tipo de Punto Limpio</label>
+        <select>
+          <option>Reciclaje</option>
+          <option>Basural</option>
+        </select>
       </div>
 
       <div className={styles.row}>
-        <label htmlFor="notes">Notes about your trip to {cityName}</label>
+        <label htmlFor="notes">Descripcion</label>
         <textarea
           id="notes"
           onChange={(e) => setNotes(e.target.value)}
@@ -92,7 +91,7 @@ function Form() {
       </div>
 
       <div className={styles.buttons}>
-        <Button type="primary">Add</Button>
+        <Button type="primary">Agregar</Button>
         <BackButton />
       </div>
     </form>

@@ -1,0 +1,14 @@
+{
+  "puntosLimpios": [
+    {
+      "address": " Av. Vicuña Mackenna 4917, 8970117 San Joaquín, Región Metropolitana",
+      "tipoPunto": "Basural",
+      "position": {
+        "lat": -33.5000852,
+        "lng": -70.6162928
+      },
+      "descripcion": "Punto de Reciclaje que se encuentra dentro del la sede Duoc San Joaquín",
+      "id": 32132
+    }
+  ]
+}

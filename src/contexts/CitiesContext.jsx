@@ -11,7 +11,7 @@ function CitiesProvider({ children }) {
     async function fetchCities() {
       try {
         setIsLoading(true);
-        const res = await fetch(`${BASE_URL}/cities`);
+        const res = await fetch(`${BASE_URL}/puntosLimpios`);
         const data = await res.json();
         setCities(data);
       } catch (error) {

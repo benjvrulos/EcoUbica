@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import styles from "./Map.module.css";
+
 import {
   MapContainer,
   Marker,
@@ -14,12 +15,12 @@ import { useGeolocation } from "../hooks/useGeoLocation";
 import Button from "./Button";
 import { useUrlPosition } from "../hooks/useUrlPosition";
 
-const BASE_URL = "https://maps.googleapis.com/maps/api/geocode/json";
-const API_KEY = "AIzaSyCi1tocSc75FiVUB1IfbnGd0QVnjXPxzjU";
-
 function Map() {
   const { cities } = useCities();
+  console.log(cities[0]?.tipoPunto);
+  const [tempMarker, setTempMarker] = useState([]);
   const [mapPosition, setMapPostion] = useState([-33.5000852, -70.6162928]);
+
   const {
     isLoading: isLoadingPosition,
     position: geolocationPosition,
@@ -30,7 +31,10 @@ function Map() {
 
   useEffect(
     function () {
-      if (mapLat && mapLng) setMapPostion([mapLat, mapLng]);
+      if (mapLat && mapLng) {
+        setTempMarker([mapLat, mapLng]);
+        setMapPostion([mapLat, mapLng]);
+      }
     },
     [mapLat, mapLng]
   );
@@ -47,7 +51,7 @@ function Map() {
     <div className={styles.mapContainer}>
       {!geolocationPosition && (
         <Button type="position" onClick={getPosition}>
-          {isLoadingPosition ? "Loading..." : "Use your position"}
+          {isLoadingPosition ? "Loading..." : "Usa tu ubicación"}
         </Button>
       )}
       <MapContainer
@@ -61,13 +65,17 @@ function Map() {
           url="https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png"
         />
 
-        {cities.map((city) => (
+        {tempMarker.length > 0 && (
+          <Marker position={[tempMarker[0], tempMarker[1]]}></Marker>
+        )}
+
+        {cities.map((punto) => (
           <Marker
-            position={[city.position.lat, city.position.lng]}
-            key={city.id}
+            position={[punto.position.lat, punto.position.lng]}
+            key={punto.id}
           >
             <Popup>
-              <span>{city.emoji}</span> <span>{city.cityName}</span>
+              <span>{punto.descripcion}</span>
             </Popup>
           </Marker>
         ))}
@@ -84,20 +92,13 @@ function ChangeCenter({ position }) {
   return null;
 }
 
-// Returns the estimate place with parameters lat and lng
-async function fetchReverseGeocoding(lat, lng) {
-  const response = await fetch(
-    `${BASE_URL}?latlng=${lat},${lng}&result_type=street_address&key=${API_KEY}`
-  );
-  const data = await response.json();
-}
-
 function DetectClick() {
   const navigate = useNavigate();
   useMapEvents({
     click: (e) => {
       const lat = e.latlng.lat;
       const lng = e.latlng.lng;
+
       navigate(`form?reverse=${true}&lat=${lat}&lng=${lng}`);
     },
   });
