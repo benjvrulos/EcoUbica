@@ -1,9 +1,9 @@
 import CityItem from "./CityItem";
-import styles from "./CityList.module.css";
+import styles from "./ReciclajeList.module.css";
 import Spinner from "./Spinner";
 import Message from "./Message";
 import { useCities } from "../contexts/CitiesContext";
-function CityList() {
+function ReciclajeList() {
   const { cities, isLoading } = useCities();
   if (isLoading) return <Spinner />;
   if (!cities.length)
@@ -19,4 +19,4 @@ function CityList() {
   );
 }
 
-export default CityList;
+export default ReciclajeList;
