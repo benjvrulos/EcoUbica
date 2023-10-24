@@ -22,10 +22,11 @@ function App() {
           <Route path="pricing" element={<Pricing />} />
           <Route path="login" element={<Login />} />
           <Route path="app" element={<AppLayout />}>
-            <Route index element={<Navigate replace to="cities" />} />
-            <Route path="cities" element={<ReciclajeList />} />
-            <Route path="cities/:id" element={<City />} />
-            <Route path="countries" element={<CountryList />} />
+            <Route index element={<Navigate replace to="puntos" />} />
+            <Route path="puntos" element={<ReciclajeList />} />
+            <Route path="puntos/:id" element={<City />} />
+            <Route path="reciclaje" element={<ReciclajeList />} />
+            <Route path="basural" element={<ReciclajeList />} />
             <Route path="form" element={<Form />} />
           </Route>
           <Route path="*" element={<PageNotFound />} />
