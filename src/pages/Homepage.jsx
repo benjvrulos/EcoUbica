@@ -8,17 +8,16 @@ export default function Homepage() {
       <PageNav />
       <section>
         <h1>
-          You travel the world.
+          EcoUbica
           <br />
-          WorldWise keeps track of your adventures.
+          tu amigo que te ayuda a reciclar
         </h1>
         <h2>
-          A world map that tracks your footsteps into every city you can think
-          of. Never forget your wonderful experiences, and show your friends how
-          you have wandered the world.
+          EcoUbica es una aplicación que te permite, consultar, registrar y
+          actualizar puntos verdes de interés.
         </h2>
         <Link to="/app" className="cta">
-          Star tracking now
+          Comienza ahora ya
         </Link>
       </section>
     </main>
