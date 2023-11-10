@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import styles from "./CityItem.module.css";
-import { useCities } from "../contexts/CitiesContext";
+import { usePuntos } from "../contexts/PuntosProvider";
 import RecyclingIcon from "@mui/icons-material/Recycling";
 import DeleteIcon from "@mui/icons-material/Delete";
 
@@ -11,16 +11,17 @@ const formatDate = (date) =>
     year: "numeric",
   }).format(new Date(date));
 
-function ReciclajeItem({ city }) {
-  const { currentCity } = useCities();
+function ReciclajeItem({ punto }) {
+  const { currentPunto } = usePuntos();
+
   const date = new Date();
-  const { tipoPunto, id, position } = city;
+  const { tipoPunto, id, position } = punto;
 
   return (
     <li>
       <Link
         className={`${styles.cityItem} ${
-          id === currentCity.id ? styles["cityItem--active"] : ""
+          id === currentPunto.id ? styles["cityItem--active"] : ""
         }`}
         to={`${id}?lat=${position.lat}&lng=${position.lng}`}
       >

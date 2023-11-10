@@ -7,14 +7,14 @@ import Login from "./pages/Login";
 import PageNotFound from "./pages/PageNotFound";
 import AppLayout from "./pages/AppLayout";
 import ReciclajeList from "./components/ReciclajeList";
-import CountryList from "./components/CountryList";
-import City from "./components/Reciclaje";
+
 import Form from "./components/Form";
-import { CitiesProvider } from "./contexts/CitiesContext";
+import { PuntosProvider } from "./contexts/PuntosProvider";
+import Reciclaje from "./components/Reciclaje";
 
 function App() {
   return (
-    <CitiesProvider>
+    <PuntosProvider>
       <BrowserRouter>
         <Routes>
           <Route index element={<Homepage />} />
@@ -24,7 +24,7 @@ function App() {
           <Route path="app" element={<AppLayout />}>
             <Route index element={<Navigate replace to="puntos" />} />
             <Route path="puntos" element={<ReciclajeList />} />
-            <Route path="puntos/:id" element={<City />} />
+            <Route path="puntos/:id" element={<Reciclaje />} />
             <Route path="reciclaje" element={<ReciclajeList />} />
             <Route path="basural" element={<ReciclajeList />} />
             <Route path="form" element={<Form />} />
@@ -32,7 +32,7 @@ function App() {
           <Route path="*" element={<PageNotFound />} />
         </Routes>
       </BrowserRouter>
-    </CitiesProvider>
+    </PuntosProvider>
   );
 }
 

@@ -1,23 +1,24 @@
 import { useParams } from "react-router-dom";
 import styles from "./City.module.css";
 import { useEffect } from "react";
-import { useCities } from "../contexts/CitiesContext";
+import { usePuntos } from "../contexts/PuntosProvider";
 import Spinner from "./Spinner";
 import BackButton from "./BackButton";
 import RecyclingIcon from "@mui/icons-material/Recycling";
 
 function Reciclaje() {
   const { id } = useParams();
-  const { getCity, currentCity, isLoading } = useCities();
+
+  const { getPunto, currentPunto, isLoading } = usePuntos();
 
   useEffect(
     function () {
-      getCity(id);
+      getPunto(id);
     },
     [id]
   );
 
-  const { address, tipoPunto, descripcion } = currentCity;
+  const { address, tipoPunto, descripcion } = currentPunto;
 
   if (isLoading) return <Spinner />;
   return (

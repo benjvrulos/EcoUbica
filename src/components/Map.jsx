@@ -10,13 +10,13 @@ import {
   useMapEvents,
 } from "react-leaflet";
 import { useEffect, useState } from "react";
-import { useCities } from "../contexts/CitiesContext";
+import { usePuntos } from "../contexts/PuntosProvider";
 import { useGeolocation } from "../hooks/useGeoLocation";
 import Button from "./Button";
 import { useUrlPosition } from "../hooks/useUrlPosition";
 
 function Map() {
-  const { cities } = useCities();
+  const { puntosList } = usePuntos();
 
   const [tempMarker, setTempMarker] = useState([]);
   const [mapPosition, setMapPostion] = useState([-33.5000852, -70.6162928]);
@@ -69,7 +69,7 @@ function Map() {
           <Marker position={[tempMarker[0], tempMarker[1]]}></Marker>
         )}
 
-        {cities.map((punto) => (
+        {puntosList.map((punto) => (
           <Marker
             position={[punto.position.lat, punto.position.lng]}
             key={punto.id}
