@@ -15,7 +15,7 @@ function Reciclaje() {
     function () {
       getPunto(id);
     },
-    [id]
+    [id, getPunto]
   );
 
   const { address, tipoPunto, description } = currentPunto;

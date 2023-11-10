@@ -65,21 +65,24 @@ function PuntosProvider({ children }) {
     fetchPuntos();
   }, []);
 
-  async function getPunto(id) {
-    if (Number(id) === currentPunto.id) return;
-    dispatch({ type: "loading" });
-    try {
-      const res = await fetch(`${BASE_URL}/puntosLimpios/${id}`);
-      const data = await res.json();
+  const getPunto = useCallback(
+    async function getPunto(id) {
+      if (Number(id) === currentPunto.id) return;
+      dispatch({ type: "loading" });
+      try {
+        const res = await fetch(`${BASE_URL}/puntosLimpios/${id}`);
+        const data = await res.json();
 
-      dispatch({ type: "punto/loaded", payload: data });
-    } catch (error) {
-      dispatch({
-        type: "rejected",
-        payload: "There was an error loading the punto...",
-      });
-    }
-  }
+        dispatch({ type: "punto/loaded", payload: data });
+      } catch (error) {
+        dispatch({
+          type: "rejected",
+          payload: "There was an error loading the punto...",
+        });
+      }
+    },
+    [currentPunto.id]
+  );
   async function createPunto(newPunto) {
     dispatch({ type: "loading" });
     try {
