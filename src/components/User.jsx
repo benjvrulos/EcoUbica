@@ -1,7 +1,7 @@
 import styles from "./User.module.css";
 
 const FAKE_USER = {
-  name: "Jack",
+  name: "Benjamin",
   email: "jack@example.com",
   password: "qwerty",
   avatar: "https://i.pravatar.cc/100?u=zz",
@@ -15,7 +15,7 @@ function User() {
   return (
     <div className={styles.user}>
       <img src={user.avatar} alt={user.name} />
-      <span>Welcome, {user.name}</span>
+      <span>Bienvenido, {user.name}</span>
       <button onClick={handleClick}>Logout</button>
     </div>
   );
