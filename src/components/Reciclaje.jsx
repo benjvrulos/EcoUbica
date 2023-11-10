@@ -18,7 +18,7 @@ function Reciclaje() {
     [id]
   );
 
-  const { address, tipoPunto, descripcion } = currentPunto;
+  const { address, tipoPunto, description } = currentPunto;
 
   if (isLoading) return <Spinner />;
   return (
@@ -38,10 +38,10 @@ function Reciclaje() {
         <p>{address}</p>
       </div>
 
-      {descripcion && (
+      {description && (
         <div className={styles.row}>
           <h6>Descripcion</h6>
-          <p>{descripcion}</p>
+          <p>{description}</p>
         </div>
       )}
 

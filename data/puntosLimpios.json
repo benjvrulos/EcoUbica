@@ -7,7 +7,7 @@
         "lat": -33.5000852,
         "lng": -70.6162928
       },
-      "descripcion": "Punto de Reciclaje que se encuentra dentro de la sede Duoc San Joaquín",
+      "description": "Punto de Reciclaje que se encuentra dentro de la sede Duoc San Joaquín",
       "id": 32132
     },
     {
@@ -17,8 +17,18 @@
         "lat": -33.5064695,
         "lng": -70.60654
       },
-      "descripcion": "Basural dentro del Estadio Monumental",
+      "description": "Basural dentro del Estadio Monumental",
       "id": 2324
+    },
+    {
+      "address": "Emco 5030, San Joaquín, Región Metropolitana, Chile",
+      "tipoPunto": "Reciclaje",
+      "description": "Cerca del Duoc",
+      "position": {
+        "lat": "-33.50203940225178",
+        "lng": "-70.6176280975342"
+      },
+      "id": 32133
     }
   ]
 }

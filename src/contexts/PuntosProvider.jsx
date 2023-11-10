@@ -71,7 +71,7 @@ function PuntosProvider({ children }) {
     try {
       const res = await fetch(`${BASE_URL}/puntosLimpios/${id}`);
       const data = await res.json();
-      console.log(data);
+
       dispatch({ type: "punto/loaded", payload: data });
     } catch (error) {
       dispatch({
@@ -80,10 +80,34 @@ function PuntosProvider({ children }) {
       });
     }
   }
+  async function createPunto(newPunto) {
+    dispatch({ type: "loading" });
+    try {
+      const res = await fetch(`${BASE_URL}/puntosLimpios`, {
+        method: "POST",
+        body: JSON.stringify(newPunto),
+        headers: { "Content-Type": "application/json" },
+      });
+      const data = await res.json();
+      dispatch({ type: "punto/created", payload: data });
+    } catch (error) {
+      dispatch({
+        type: "rejected",
+        payload: "There was an error creating the punto...",
+      });
+    }
+  }
 
   return (
     <PuntosContext.Provider
-      value={{ puntosList, isLoading, currentPunto, getPunto, error }}
+      value={{
+        puntosList,
+        isLoading,
+        currentPunto,
+        getPunto,
+        error,
+        createPunto,
+      }}
     >
       {children}
     </PuntosContext.Provider>

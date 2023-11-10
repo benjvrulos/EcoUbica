@@ -9,7 +9,8 @@ import Spinner from "./Spinner";
 import BackButton from "./BackButton";
 import { AutoComplete } from "./AutoComplete";
 import { useUrlPosition } from "../hooks/useUrlPosition";
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import { usePuntos } from "../contexts/PuntosProvider";
 
 export function convertToEmoji(countryCode) {
   const codePoints = countryCode
@@ -24,11 +25,15 @@ const API_KEY = "AIzaSyCi1tocSc75FiVUB1IfbnGd0QVnjXPxzjU";
 
 function Form() {
   const [lat, lng] = useUrlPosition();
+  const { createPunto, isLoading } = usePuntos();
+  const navigate = useNavigate();
+
   const [searchParams] = useSearchParams();
   const [isLoadingGeocoding, setIsLoadingGeocoding] = useState(false);
+  const [tipoPunto, setTipoPunto] = useState("Reciclaje");
   const [address, setAddress] = useState("");
 
-  const [notes, setNotes] = useState("");
+  const [description, setDescription] = useState("");
 
   const [geoCodingError, setGeoCodingError] = useState("");
 
@@ -62,12 +67,27 @@ function Form() {
     },
     [lat, lng, searchParams]
   );
+  async function handleSubmit(e) {
+    e.preventDefault();
+    if (!description) return;
+    const newPunto = {
+      address,
+      tipoPunto,
+      description,
+      position: { lat, lng },
+    };
+    await createPunto(newPunto);
+    navigate("/app");
+  }
 
   if (isLoadingGeocoding) return <Spinner />;
   if (geoCodingError) return <Message message={geoCodingError} />;
 
   return (
-    <form className={styles.form}>
+    <form
+      className={`${styles.form} ${isLoading ? styles.loading : ""}`}
+      onSubmit={handleSubmit}
+    >
       <div className={styles.row}>
         <label htmlFor="cityName">Dirección</label>
         <AutoComplete onAdress={setAddress} address={address} />
@@ -75,9 +95,13 @@ function Form() {
 
       <div className={styles.row}>
         <label htmlFor="date">Tipo de Punto Limpio</label>
-        <select>
-          <option>Reciclaje</option>
-          <option>Basural</option>
+        <select
+          id="date"
+          value={tipoPunto}
+          onChange={(e) => setTipoPunto(e.target.value)}
+        >
+          <option value="Reciclaje">Reciclaje</option>
+          <option value="Basural">Basural</option>
         </select>
       </div>
 
@@ -85,8 +109,8 @@ function Form() {
         <label htmlFor="notes">Descripcion</label>
         <textarea
           id="notes"
-          onChange={(e) => setNotes(e.target.value)}
-          value={notes}
+          onChange={(e) => setDescription(e.target.value)}
+          value={description}
         />
       </div>
 

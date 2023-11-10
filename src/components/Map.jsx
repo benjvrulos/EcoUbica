@@ -75,7 +75,7 @@ function Map() {
             key={punto.id}
           >
             <Popup>
-              <span>{punto.descripcion}</span>
+              <span>{punto.description}</span>
             </Popup>
           </Marker>
         ))}
