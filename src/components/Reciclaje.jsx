@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import styles from "./City.module.css";
+import styles from "./Reciclaje.module.css";
 import { useEffect } from "react";
 import { usePuntos } from "../contexts/PuntosProvider";
 import Spinner from "./Spinner";

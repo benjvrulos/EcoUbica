@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import styles from "./CityItem.module.css";
+import styles from "./ReciclajeItem.module.css";
 import { usePuntos } from "../contexts/PuntosProvider";
 import RecyclingIcon from "@mui/icons-material/Recycling";
 import DeleteIcon from "@mui/icons-material/Delete";
