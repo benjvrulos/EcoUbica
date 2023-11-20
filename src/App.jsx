@@ -11,6 +11,7 @@ import ReciclajeList from "./components/ReciclajeList";
 import Form from "./components/Form";
 import { PuntosProvider } from "./contexts/PuntosProvider";
 import Reciclaje from "./components/Reciclaje";
+import Account from "./components/Account";
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
             <Route path="reciclaje" element={<ReciclajeList />} />
             <Route path="basural" element={<ReciclajeList />} />
             <Route path="form" element={<Form />} />
+            <Route path="user" element={<Account />} />
           </Route>
           <Route path="*" element={<PageNotFound />} />
         </Routes>

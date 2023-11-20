@@ -5,6 +5,7 @@ import {
   useEffect,
   useReducer,
 } from "react";
+import { getPuntos } from "../../services/appPuntos";
 const BASE_URL = "http://localhost:9000";
 
 const PuntosContext = createContext();
@@ -51,8 +52,7 @@ function PuntosProvider({ children }) {
     async function fetchPuntos() {
       dispatch({ type: "loading" });
       try {
-        const res = await fetch(`${BASE_URL}/puntosLimpios`);
-        const data = await res.json();
+        const data = await getPuntos();
 
         dispatch({ type: "puntos/loaded", payload: data });
       } catch (error) {
