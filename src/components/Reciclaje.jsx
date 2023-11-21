@@ -13,7 +13,7 @@ function Reciclaje() {
 
   useEffect(
     function () {
-      getPunto(id);
+      getPunto(Number(id));
     },
     [id, getPunto]
   );

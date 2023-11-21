@@ -5,8 +5,12 @@ import {
   useEffect,
   useReducer,
 } from "react";
-import { getPuntos } from "../../services/appPuntos";
-const BASE_URL = "http://localhost:9000";
+import {
+  getPunto as getPuntoApi,
+  getPuntos,
+  createPunto as createPuntoApi,
+  deletePunto as deletePuntoApi,
+} from "../../services/appPuntos";
 
 const PuntosContext = createContext();
 
@@ -32,6 +36,15 @@ function reducer(state, action) {
         isLoading: false,
         puntosList: [...state.puntosList, action.payload],
         currentPunto: action.payload,
+      };
+
+    case "punto/deleted":
+      return {
+        ...state,
+        isLoading: false,
+        puntosList: state.puntosList.filter(
+          (punto) => punto.id !== action.payload
+        ),
       };
     case "rejected":
       return { ...state, isLoading: false, error: action.payload };
@@ -70,8 +83,7 @@ function PuntosProvider({ children }) {
       if (Number(id) === currentPunto.id) return;
       dispatch({ type: "loading" });
       try {
-        const res = await fetch(`${BASE_URL}/puntosLimpios/${id}`);
-        const data = await res.json();
+        const data = await getPuntoApi(Number(id));
 
         dispatch({ type: "punto/loaded", payload: data });
       } catch (error) {
@@ -86,13 +98,21 @@ function PuntosProvider({ children }) {
   async function createPunto(newPunto) {
     dispatch({ type: "loading" });
     try {
-      const res = await fetch(`${BASE_URL}/puntosLimpios`, {
-        method: "POST",
-        body: JSON.stringify(newPunto),
-        headers: { "Content-Type": "application/json" },
+      const data = await createPuntoApi(newPunto);
+
+      dispatch({ type: "punto/created", payload: data[0] });
+    } catch (error) {
+      dispatch({
+        type: "rejected",
+        payload: "There was an error creating the punto...",
       });
-      const data = await res.json();
-      dispatch({ type: "punto/created", payload: data });
+    }
+  }
+  async function deletePunto(newPunto) {
+    dispatch({ type: "loading" });
+    try {
+      const id = await deletePuntoApi(newPunto);
+      dispatch({ type: "punto/deleted", payload: id });
     } catch (error) {
       dispatch({
         type: "rejected",
@@ -110,6 +130,7 @@ function PuntosProvider({ children }) {
         getPunto,
         error,
         createPunto,
+        deletePunto,
       }}
     >
       {children}

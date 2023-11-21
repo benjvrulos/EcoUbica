@@ -12,10 +12,15 @@ const formatDate = (date) =>
   }).format(new Date(date));
 
 function ReciclajeItem({ punto }) {
-  const { currentPunto } = usePuntos();
+  const { currentPunto, deletePunto } = usePuntos();
 
   const date = new Date();
   const { tipoPunto, id, position } = punto;
+
+  function handleDelete(e) {
+    e.preventDefault();
+    deletePunto(id);
+  }
 
   return (
     <li>
@@ -29,7 +34,12 @@ function ReciclajeItem({ punto }) {
 
         <h3 className={styles.name}>{tipoPunto}</h3>
         <time className={styles.date}>{formatDate(date)}</time>
-        <button className={styles.deleteBtn}>&times;</button>
+        <button
+          onClick={handleDelete}
+          className={styles.deleteBtn}
+        >
+          &times;
+        </button>
       </Link>
     </li>
   );

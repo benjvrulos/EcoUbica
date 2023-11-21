@@ -12,14 +12,6 @@ import { useUrlPosition } from "../hooks/useUrlPosition";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { usePuntos } from "../contexts/PuntosProvider";
 
-export function convertToEmoji(countryCode) {
-  const codePoints = countryCode
-    .toUpperCase()
-    .split("")
-    .map((char) => 127397 + char.charCodeAt());
-  return String.fromCodePoint(...codePoints);
-}
-
 const BASE_URL = "https://maps.googleapis.com/maps/api/geocode/json";
 const API_KEY = "AIzaSyCi1tocSc75FiVUB1IfbnGd0QVnjXPxzjU";
 
@@ -90,7 +82,10 @@ function Form() {
     >
       <div className={styles.row}>
         <label htmlFor="cityName">Dirección</label>
-        <AutoComplete onAdress={setAddress} address={address} />
+        <AutoComplete
+          onAdress={setAddress}
+          address={address}
+        />
       </div>
 
       <div className={styles.row}>
