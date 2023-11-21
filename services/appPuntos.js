@@ -1,7 +1,10 @@
 import supabase from "./supabase";
 
 export async function getPuntos() {
-  const { data, error } = await supabase.from("puntos").select("*");
+  const { data, error } = await supabase
+    .from("puntos")
+    .select("*")
+    .eq("aceptado", true);
   if (error) {
     console.error(error);
     throw new Error("Puntos could not be loaded");
@@ -29,15 +32,26 @@ export async function deletePunto(id) {
   return id;
 }
 
-export async function createPunto(punto) {
+export async function createPunto(punto, role) {
+  let puntoCreated;
+  switch (role) {
+    case "admin":
+      puntoCreated = { ...punto, aceptado: true };
+      break;
+
+    case "user":
+      puntoCreated = punto;
+      break;
+    default:
+      throw new Error("Unknown role");
+  }
   const { data, error } = await supabase
     .from("puntos")
-    .insert([{ ...punto }])
+    .insert([puntoCreated])
     .select();
 
   if (error) {
-    console.error(error);
-    throw new Error("Punto could not be created");
+    throw new Error("There was an error creating the punto");
   }
   return data;
 }

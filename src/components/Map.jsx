@@ -16,6 +16,7 @@ import Button from "./Button";
 import { useUrlPosition } from "../hooks/useUrlPosition";
 
 function Map() {
+  const navigate = useNavigate();
   const { puntosList } = usePuntos();
 
   const [tempMarker, setTempMarker] = useState([]);
@@ -50,7 +51,10 @@ function Map() {
   return (
     <div className={styles.mapContainer}>
       {!geolocationPosition && (
-        <Button type="position" onClick={getPosition}>
+        <Button
+          type="position"
+          onClick={getPosition}
+        >
           {isLoadingPosition ? "Loading..." : "Usa tu ubicación"}
         </Button>
       )}
@@ -71,6 +75,14 @@ function Map() {
 
         {puntosList.map((punto) => (
           <Marker
+            eventHandlers={{
+              click: (e) => {
+                setMapPostion([e.latlng.lat, e.latlng.lng]);
+                navigate(
+                  `puntos/${punto.id}?lat=${e.latlng.lat}&lng=${e.latlng.lng}`
+                );
+              },
+            }}
             position={[punto.position.lat, punto.position.lng]}
             key={punto.id}
           >

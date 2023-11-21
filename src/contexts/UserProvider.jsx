@@ -1,37 +1,49 @@
 import { createContext, useContext, useReducer } from "react";
+import { fetchUserInfo, loginApi } from "../../services/apiUsers";
 
 const AuthContext = createContext();
 
 const initialState = {
   user: null,
   isAuthenticated: false,
+  error: {},
+  isLoading: false,
 };
 
 function reducer(state, action) {
   switch (action.type) {
+    case "loading":
+      return { ...state, isLoading: true };
     case "login":
       return { ...state, user: action.payload, isAuthenticated: true };
     case "logout":
       return { ...state, user: null, isAuthenticated: false };
+    case "rejected":
+      return { ...state, isLoading: false, error: action.payload };
     default:
       throw new Error("Unknown action");
   }
 }
-const FAKE_USER = {
-  name: "Jack",
-  email: "jack@example.com",
-  password: "qwerty",
-  avatar: "https://i.pravatar.cc/100?u=zz",
-};
 
 function AuthProvider({ children }) {
   const [{ user, isAuthenticated }, dispatch] = useReducer(
     reducer,
     initialState
   );
-  function login(email, password) {
-    if (email === FAKE_USER.email && password === FAKE_USER.password)
-      dispatch({ type: "login", payload: FAKE_USER });
+
+  async function login(email, password) {
+    dispatch({ type: "loading" });
+    try {
+      const { user } = await loginApi(email, password);
+      const userInfo = await fetchUserInfo(user.id);
+      const userFull = { ...userInfo[0], correo: user.email };
+      dispatch({ type: "login", payload: userFull });
+    } catch (error) {
+      dispatch({
+        type: "rejected",
+        payload: "Contraseña o email incorrecto",
+      });
+    }
   }
 
   function logout() {

@@ -16,7 +16,10 @@ export default function Homepage() {
           EcoUbica es una aplicación que te permite, consultar, registrar y
           actualizar puntos verdes de interés.
         </h2>
-        <Link to="/app" className="cta">
+        <Link
+          to="/app"
+          className="cta"
+        >
           Comienza ahora ya
         </Link>
       </section>

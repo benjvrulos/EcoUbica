@@ -45,3 +45,23 @@
   font-size: 1.6rem;
   color: var(--color-brand--1);
 }
+
+.containerProfile {
+  display: flex;
+  gap: 1rem;
+}
+
+.profile {
+  flex-wrap: wrap;
+}
+
+.profile img {
+  border-radius: 100px;
+  height: 7rem;
+}
+
+.progress {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}

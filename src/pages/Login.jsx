@@ -7,8 +7,8 @@ import { useAuth } from "../contexts/UserProvider";
 
 export default function Login() {
   // PRE-FILL FOR DEV PURPOSES
-  const [email, setEmail] = useState("jack@example.com");
-  const [password, setPassword] = useState("qwerty");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const { login, isAuthenticated } = useAuth();
   const navigate = useNavigate();
 
@@ -29,7 +29,7 @@ export default function Login() {
         onSubmit={handleSubmit}
       >
         <div className={styles.row}>
-          <label htmlFor="email">Email address</label>
+          <label htmlFor="email">Correo</label>
           <input
             type="email"
             id="email"
@@ -39,7 +39,7 @@ export default function Login() {
         </div>
 
         <div className={styles.row}>
-          <label htmlFor="password">Password</label>
+          <label htmlFor="password">Contraseña</label>
           <input
             type="password"
             id="password"

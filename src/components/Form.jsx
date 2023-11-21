@@ -11,11 +11,13 @@ import { AutoComplete } from "./AutoComplete";
 import { useUrlPosition } from "../hooks/useUrlPosition";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { usePuntos } from "../contexts/PuntosProvider";
+import { useAuth } from "../contexts/UserProvider";
 
 const BASE_URL = "https://maps.googleapis.com/maps/api/geocode/json";
 const API_KEY = "AIzaSyCi1tocSc75FiVUB1IfbnGd0QVnjXPxzjU";
 
 function Form() {
+  const { user } = useAuth();
   const [lat, lng] = useUrlPosition();
   const { createPunto, isLoading } = usePuntos();
   const navigate = useNavigate();
@@ -68,10 +70,17 @@ function Form() {
       description,
       position: { lat, lng },
     };
-    await createPunto(newPunto);
+    await createPunto(newPunto, user.role);
     navigate("/app");
   }
-
+  if (!user) {
+    return (
+      <>
+        <Message message="Regístrate para comenzar a agregar puntos de reciclaje"></Message>
+        <Button type="primary">Registrarse</Button>
+      </>
+    );
+  }
   if (isLoadingGeocoding) return <Spinner />;
   if (geoCodingError) return <Message message={geoCodingError} />;
 
@@ -110,7 +119,9 @@ function Form() {
       </div>
 
       <div className={styles.buttons}>
-        <Button type="primary">Agregar</Button>
+        <Button type="primary">
+          {user.role === "admin" ? "Agregar" : "Solicitar"}
+        </Button>
         <BackButton />
       </div>
     </form>

@@ -37,8 +37,14 @@ function reducer(state, action) {
       return {
         ...state,
         isLoading: false,
-        puntosList: [...state.puntosList, action.payload],
-        currentPunto: action.payload,
+        puntosList:
+          action.payload.role === "admin"
+            ? [...state.puntosList, action.payload.punto]
+            : state.puntosList,
+        currentPunto:
+          action.payload.role === "admin"
+            ? action.payload.punto
+            : state.currentPunto,
       };
 
     case "punto/deleted":
@@ -98,12 +104,12 @@ function PuntosProvider({ children }) {
     },
     [currentPunto.id]
   );
-  async function createPunto(newPunto) {
+  async function createPunto(newPunto, role) {
     dispatch({ type: "loading" });
     try {
-      const data = await createPuntoApi(newPunto);
+      const data = await createPuntoApi(newPunto, role)[0];
 
-      dispatch({ type: "punto/created", payload: data[0] });
+      dispatch({ type: "punto/created", payload: { data, role } });
     } catch (error) {
       dispatch({
         type: "rejected",
