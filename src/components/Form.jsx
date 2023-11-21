@@ -9,7 +9,7 @@ import Spinner from "./Spinner";
 import BackButton from "./BackButton";
 import { AutoComplete } from "./AutoComplete";
 import { useUrlPosition } from "../hooks/useUrlPosition";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { usePuntos } from "../contexts/PuntosProvider";
 import { useAuth } from "../contexts/UserProvider";
 
@@ -18,6 +18,7 @@ const API_KEY = "AIzaSyCi1tocSc75FiVUB1IfbnGd0QVnjXPxzjU";
 
 function Form() {
   const { user } = useAuth();
+
   const [lat, lng] = useUrlPosition();
   const { createPunto, isLoading } = usePuntos();
   const navigate = useNavigate();
@@ -64,20 +65,25 @@ function Form() {
   async function handleSubmit(e) {
     e.preventDefault();
     if (!description) return;
+
+    const latNum = Number(lat);
+    const lngNum = Number(lng);
     const newPunto = {
       address,
       tipoPunto,
       description,
-      position: { lat, lng },
+      position: { lat: latNum, lng: lngNum },
     };
     await createPunto(newPunto, user.role);
-    navigate("/app");
+    navigate("/app/puntos");
   }
   if (!user) {
     return (
       <>
-        <Message message="Regístrate para comenzar a agregar puntos de reciclaje"></Message>
-        <Button type="primary">Registrarse</Button>
+        <Message message="Ingresa para comenzar a agregar puntos de reciclaje"></Message>
+        <Link to="/login">
+          <Button type="primary">Ingresar</Button>
+        </Link>
       </>
     );
   }

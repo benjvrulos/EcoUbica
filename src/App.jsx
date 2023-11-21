@@ -12,7 +12,7 @@ import Form from "./components/Form";
 import { PuntosProvider } from "./contexts/PuntosProvider";
 import Reciclaje from "./components/Reciclaje";
 import Account from "./components/Account";
-import ProtectedRoute from "./pages/ProtectedRoute";
+
 import { AuthProvider } from "./contexts/UserProvider";
 
 function App() {

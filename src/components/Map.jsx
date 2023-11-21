@@ -87,7 +87,9 @@ function Map() {
             key={punto.id}
           >
             <Popup>
-              <span>{punto.description}</span>
+              <span>
+                Estado: {punto.estado ? punto.estado : "No hay información"}
+              </span>
             </Popup>
           </Marker>
         ))}

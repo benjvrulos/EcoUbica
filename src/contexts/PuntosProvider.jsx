@@ -107,9 +107,10 @@ function PuntosProvider({ children }) {
   async function createPunto(newPunto, role) {
     dispatch({ type: "loading" });
     try {
-      const data = await createPuntoApi(newPunto, role)[0];
+      const data = await createPuntoApi(newPunto, role);
+      console.log(data);
 
-      dispatch({ type: "punto/created", payload: { data, role } });
+      dispatch({ type: "punto/created", payload: { punto: data, role } });
     } catch (error) {
       dispatch({
         type: "rejected",

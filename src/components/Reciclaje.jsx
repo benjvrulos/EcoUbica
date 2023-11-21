@@ -5,6 +5,7 @@ import { usePuntos } from "../contexts/PuntosProvider";
 import Spinner from "./Spinner";
 import BackButton from "./BackButton";
 import RecyclingIcon from "@mui/icons-material/Recycling";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 function Reciclaje() {
   const { id } = useParams();
@@ -25,12 +26,16 @@ function Reciclaje() {
     <div className={styles.city}>
       <div className={styles.row}>
         <h6>Tipo de Punto:</h6>
-        <h3>
+        <div className={styles.tipoPunto}>
           <span>
-            <RecyclingIcon />
-            {tipoPunto}
+            {tipoPunto === "Reciclaje" ? (
+              <RecyclingIcon fontSize="large" />
+            ) : (
+              <DeleteIcon fontSize="large" />
+            )}
           </span>
-        </h3>
+          <h3>{tipoPunto}</h3>
+        </div>
       </div>
 
       <div className={styles.row}>

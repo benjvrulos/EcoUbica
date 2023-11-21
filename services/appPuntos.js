@@ -45,13 +45,15 @@ export async function createPunto(punto, role) {
     default:
       throw new Error("Unknown role");
   }
+
   const { data, error } = await supabase
     .from("puntos")
     .insert([puntoCreated])
     .select();
 
   if (error) {
+    console.log(error);
     throw new Error("There was an error creating the punto");
   }
-  return data;
+  return data[0];
 }

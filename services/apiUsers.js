@@ -7,11 +7,18 @@ export async function loginApi(email, password) {
   });
 
   if (error) {
-    console.error(error);
     throw new Error("Contraseña o email incorrecto");
   }
 
   return data;
+}
+
+export async function logoutApi() {
+  let { error } = await supabase.auth.signOut();
+  if (error) {
+    console.error(error);
+    throw new Error("There was an error loging out");
+  }
 }
 
 export async function fetchUserInfo(idUser) {
@@ -20,7 +27,6 @@ export async function fetchUserInfo(idUser) {
     .select()
     .eq("idUser", idUser);
   if (error) {
-    console.error(error);
     throw new Error("Unknown");
   }
   return userInfo;

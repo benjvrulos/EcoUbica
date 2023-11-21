@@ -1,5 +1,5 @@
 import { createContext, useContext, useReducer } from "react";
-import { fetchUserInfo, loginApi } from "../../services/apiUsers";
+import { fetchUserInfo, loginApi, logoutApi } from "../../services/apiUsers";
 
 const AuthContext = createContext();
 
@@ -46,8 +46,17 @@ function AuthProvider({ children }) {
     }
   }
 
-  function logout() {
-    dispatch({ type: "logout" });
+  async function logout() {
+    dispatch({ type: "loading" });
+    try {
+      await logoutApi();
+      dispatch({ type: "logout" });
+    } catch (error) {
+      dispatch({
+        type: "rejected",
+        payload: "There was an error loging out",
+      });
+    }
   }
   return (
     <AuthContext.Provider value={{ user, isAuthenticated, login, logout }}>
