@@ -12,29 +12,81 @@ import Form from "./components/Form";
 import { PuntosProvider } from "./contexts/PuntosProvider";
 import Reciclaje from "./components/Reciclaje";
 import Account from "./components/Account";
+import ProtectedRoute from "./pages/ProtectedRoute";
+import { AuthProvider } from "./contexts/UserProvider";
 
 function App() {
   return (
-    <PuntosProvider>
-      <BrowserRouter>
-        <Routes>
-          <Route index element={<Homepage />} />
-          <Route path="product" element={<Product />} />
-          <Route path="pricing" element={<Pricing />} />
-          <Route path="login" element={<Login />} />
-          <Route path="app" element={<AppLayout />}>
-            <Route index element={<Navigate replace to="puntos" />} />
-            <Route path="puntos" element={<ReciclajeList />} />
-            <Route path="puntos/:id" element={<Reciclaje />} />
-            <Route path="reciclaje" element={<ReciclajeList />} />
-            <Route path="basural" element={<ReciclajeList />} />
-            <Route path="form" element={<Form />} />
-            <Route path="user" element={<Account />} />
-          </Route>
-          <Route path="*" element={<PageNotFound />} />
-        </Routes>
-      </BrowserRouter>
-    </PuntosProvider>
+    <AuthProvider>
+      <PuntosProvider>
+        <BrowserRouter>
+          <Routes>
+            <Route
+              index
+              element={<Homepage />}
+            />
+            <Route
+              path="product"
+              element={<Product />}
+            />
+            <Route
+              path="pricing"
+              element={<Pricing />}
+            />
+            <Route
+              path="login"
+              element={<Login />}
+            />
+            <Route
+              path="app"
+              element={
+                <ProtectedRoute>
+                  <AppLayout />
+                </ProtectedRoute>
+              }
+            >
+              <Route
+                index
+                element={
+                  <Navigate
+                    replace
+                    to="puntos"
+                  />
+                }
+              />
+              <Route
+                path="puntos"
+                element={<ReciclajeList />}
+              />
+              <Route
+                path="puntos/:id"
+                element={<Reciclaje />}
+              />
+              <Route
+                path="reciclaje"
+                element={<ReciclajeList />}
+              />
+              <Route
+                path="basural"
+                element={<ReciclajeList />}
+              />
+              <Route
+                path="form"
+                element={<Form />}
+              />
+              <Route
+                path="user"
+                element={<Account />}
+              />
+            </Route>
+            <Route
+              path="*"
+              element={<PageNotFound />}
+            />
+          </Routes>
+        </BrowserRouter>
+      </PuntosProvider>
+    </AuthProvider>
   );
 }
 

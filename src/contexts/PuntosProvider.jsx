@@ -19,12 +19,15 @@ const initialState = {
   isLoading: false,
   currentPunto: {},
   error: "",
+  currentUser: {},
 };
 
 function reducer(state, action) {
   switch (action.type) {
     case "loading":
       return { ...state, isLoading: true };
+    case "usuario/loaded":
+      return { ...state, isLoading: false, currentUser: action.payload };
     case "puntos/loaded":
       return { ...state, isLoading: false, puntosList: action.payload };
 
