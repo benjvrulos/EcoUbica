@@ -14,6 +14,7 @@ import Reciclaje from "./components/Reciclaje";
 import Account from "./components/Account";
 
 import { AuthProvider } from "./contexts/UserProvider";
+import SolicitudesList from "./components/SolicitudesList";
 
 function App() {
   return (
@@ -59,8 +60,8 @@ function App() {
                 element={<Reciclaje />}
               />
               <Route
-                path="reciclaje"
-                element={<ReciclajeList />}
+                path="solicitudes"
+                element={<SolicitudesList />}
               />
               <Route
                 path="basural"

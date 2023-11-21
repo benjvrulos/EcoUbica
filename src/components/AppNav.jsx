@@ -12,7 +12,7 @@ function AppNav() {
           <NavLink to="reciclaje">Reciclaje</NavLink>
         </li>
         <li>
-          <NavLink to="basural">Basural</NavLink>
+          <NavLink to="solicitudes">Solicitudes</NavLink>
         </li>
       </ul>
     </nav>
