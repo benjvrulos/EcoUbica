@@ -1,5 +1,7 @@
 # EcoUbica
-Es un proyecto en React que permite geolocalizar puntos verdes en el país y despliega un mapa interactivo para crear nuevos puntos o modificarlos.
-Para instalar el proyecto se deben correr los siguientes comandos en forma consecutiva:
+## Description
+React 17 project which geolocalizes recycling locations in Chile and shows an interactive map to create,read, delete and uptadte new locations.  
+## Instalation
+You need to run the following comands when you already downloaded the project
 - npm install 
 - npm run dev
