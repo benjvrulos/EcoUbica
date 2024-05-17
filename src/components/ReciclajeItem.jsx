@@ -11,7 +11,7 @@ const formatDate = (date) =>
     year: "numeric",
   }).format(new Date(date));
 
-function ReciclajeItem({ punto }) {
+function ReciclajeItem({ punto, role }) {
   const { currentPunto, deletePunto } = usePuntos();
 
   const date = new Date();
@@ -25,21 +25,22 @@ function ReciclajeItem({ punto }) {
   return (
     <li>
       <Link
-        className={`${styles.cityItem} ${
-          id === currentPunto.id ? styles["cityItem--active"] : ""
-        }`}
+        className={`${styles.cityItem} ${id === currentPunto.id ? styles["cityItem--active"] : ""}`}
         to={`${id}?lat=${position.lat}&lng=${position.lng}`}
       >
         {tipoPunto === "Reciclaje" ? <RecyclingIcon /> : <DeleteIcon />}
 
         <h3 className={styles.name}>{tipoPunto}</h3>
         <time className={styles.date}>{formatDate(date)}</time>
-        <button
-          onClick={handleDelete}
-          className={styles.deleteBtn}
-        >
-          &times;
-        </button>
+
+        {role && (
+          <button
+            onClick={handleDelete}
+            className={styles.deleteBtn}
+          >
+            &times;
+          </button>
+        )}
       </Link>
     </li>
   );

@@ -51,13 +51,13 @@ function Account() {
       </div>
       <div className={styles.row}>
         <h6>Nombre:</h6>
-        <h3>
+        <div>
           <h3>{user.fullName}</h3>
-        </h3>
+        </div>
         <h6>Nivel:</h6>
-        <h3>
+        <div>
           <h3>{user.nivel}</h3>
-        </h3>
+        </div>
       </div>
 
       <div className={styles.row}>
