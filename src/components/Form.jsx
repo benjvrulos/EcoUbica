@@ -14,7 +14,7 @@ import { usePuntos } from "../contexts/PuntosProvider";
 import { useAuth } from "../contexts/UserProvider";
 
 const BASE_URL = "https://maps.googleapis.com/maps/api/geocode/json";
-const API_KEY = "AIzaSyCi1tocSc75FiVUB1IfbnGd0QVnjXPxzjU";
+const API_KEY = "AIzaSyDXPoPrJFxb3wDpyDCAuuddacMGesBd38U";
 
 function Form() {
   const { user } = useAuth();
@@ -40,10 +40,9 @@ function Form() {
           try {
             setIsLoadingGeocoding(true);
             setGeoCodingError("");
-            const response = await fetch(
-              `${BASE_URL}?latlng=${lat},${lng}&result_type=street_address&key=${API_KEY}`
-            );
+            const response = await fetch(`${BASE_URL}?latlng=${lat},${lng}&result_type=street_address&key=${API_KEY}`);
             const data = await response.json();
+            console.log(data);
 
             // if (!data.countryCode)
             //   throw new Error(
@@ -57,7 +56,10 @@ function Form() {
             setIsLoadingGeocoding(false);
           }
         }
-        fetchReverseGeocoding();
+
+        if (user) {
+          fetchReverseGeocoding();
+        }
       }
     },
     [lat, lng, searchParams]
@@ -125,9 +127,7 @@ function Form() {
       </div>
 
       <div className={styles.buttons}>
-        <Button type="primary">
-          {user.role === "admin" ? "Agregar" : "Solicitar"}
-        </Button>
+        <Button type="primary">{user.role === "admin" ? "Agregar" : "Solicitar"}</Button>
         <BackButton />
       </div>
     </form>

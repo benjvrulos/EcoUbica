@@ -1,7 +1,7 @@
 import { usePlacesWidget } from "react-google-autocomplete";
 import { useNavigate } from "react-router-dom";
 
-const API_KEY = "AIzaSyCi1tocSc75FiVUB1IfbnGd0QVnjXPxzjU";
+const API_KEY = "AIzaSyDXPoPrJFxb3wDpyDCAuuddacMGesBd38U";
 
 export function AutoComplete({ onAdress, address }) {
   const navigate = useNavigate();
@@ -9,6 +9,7 @@ export function AutoComplete({ onAdress, address }) {
   const { ref } = usePlacesWidget({
     apiKey: API_KEY,
     onPlaceSelected: (place, inputRef) => {
+      console.log(inputRef.value);
       onAdress(inputRef.value);
 
       const lat = place.geometry.location.lat();
@@ -21,5 +22,11 @@ export function AutoComplete({ onAdress, address }) {
     },
   });
 
-  return <input ref={ref} style={{ width: "100%" }} defaultValue={address} />;
+  return (
+    <input
+      ref={ref}
+      style={{ width: "100%" }}
+      defaultValue={address}
+    />
+  );
 }
