@@ -76,3 +76,8 @@
   display: flex;
   justify-content: center;
 }
+
+.containerBtns {
+  display: flex;
+  justify-content: space-around;
+}

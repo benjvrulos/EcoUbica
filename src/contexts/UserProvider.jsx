@@ -1,5 +1,5 @@
 import { createContext, useContext, useReducer } from "react";
-import { fetchUserInfo, loginApi, logoutApi } from "../../services/apiUsers";
+import { createUserInfo, fetchUserInfo, loginApi, logoutApi, signUpApi } from "../../services/apiUsers";
 
 const AuthContext = createContext();
 
@@ -26,13 +26,11 @@ function reducer(state, action) {
 }
 
 function AuthProvider({ children }) {
-  const [{ user, isAuthenticated }, dispatch] = useReducer(
-    reducer,
-    initialState
-  );
+  const [{ user, isAuthenticated }, dispatch] = useReducer(reducer, initialState);
 
   async function login(email, password) {
     dispatch({ type: "loading" });
+
     try {
       const { user } = await loginApi(email, password);
       const userInfo = await fetchUserInfo(user.id);
@@ -44,6 +42,26 @@ function AuthProvider({ children }) {
         payload: "Contraseña o email incorrecto",
       });
     }
+  }
+
+  async function signUp(email, password, fullName) {
+    dispatch({ type: "loading" });
+    try {
+      const data = await signUpApi(email, password);
+      const idUser = data.user.id;
+      const respCreateUserInfo = await createUserInfo(fullName, idUser);
+      const userInfo = await fetchUserInfo(idUser);
+      console.log(userInfo);
+      const userFull = { ...userInfo[0], correo: user.email };
+      dispatch({ type: "login", payload: userFull });
+    } catch (error) {
+      dispatch({
+        type: "rejected",
+        payload: "Contraseña o email incorrecto",
+      });
+    }
+
+    // return data.user;
   }
 
   async function logout() {
@@ -58,17 +76,12 @@ function AuthProvider({ children }) {
       });
     }
   }
-  return (
-    <AuthContext.Provider value={{ user, isAuthenticated, login, logout }}>
-      {children}
-    </AuthContext.Provider>
-  );
+  return <AuthContext.Provider value={{ user, isAuthenticated, login, logout, signUp }}>{children}</AuthContext.Provider>;
 }
 
 function useAuth() {
   const context = useContext(AuthContext);
-  if (context === undefined)
-    throw new Error("AuthContext was used outisede AuthProvider");
+  if (context === undefined) throw new Error("AuthContext was used outisede AuthProvider");
 
   return context;
 }

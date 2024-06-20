@@ -1,9 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/UserProvider";
 import Button from "./Button";
-import styles from "./Reciclaje.module.css";
-
-const avatar = "https://i.pravatar.cc/100?u=zz";
+import styles from "./PuntoVerde.module.css";
 
 function calcularNivel(nivel) {
   let maxMinValue;
@@ -34,7 +32,7 @@ function Account() {
         <div className={styles.profile}>
           <h6>Avatar:</h6>
           <img
-            src={avatar}
+            src="/user-profile.png"
             alt={user.fullName}
           ></img>
         </div>

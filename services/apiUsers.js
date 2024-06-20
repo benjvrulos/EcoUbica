@@ -21,11 +21,22 @@ export async function logoutApi() {
   }
 }
 
+export async function signUpApi(email, password) {
+  let { data, error } = await supabase.auth.signUp({
+    email,
+    password,
+  });
+
+  return data;
+}
+
+export async function createUserInfo(fullName, idUser) {
+  const resp = await supabase.from("usersInfo").insert({ idUser, fullName, role: "user", experiencia: 0, nivel: "principiante" });
+  return resp;
+}
+
 export async function fetchUserInfo(idUser) {
-  let { data: userInfo, error } = await supabase
-    .from("usersInfo")
-    .select()
-    .eq("idUser", idUser);
+  let { data: userInfo, error } = await supabase.from("usersInfo").select().eq("idUser", idUser);
   if (error) {
     throw new Error("Unknown");
   }

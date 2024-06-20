@@ -4,6 +4,7 @@ import Product from "./pages/Product";
 import Pricing from "./pages/Pricing";
 import Homepage from "./pages/Homepage";
 import Login from "./pages/Login";
+import SignUp from "./pages/SignUp";
 import PageNotFound from "./pages/PageNotFound";
 import AppLayout from "./pages/AppLayout";
 import ReciclajeList from "./components/ReciclajeList";
@@ -14,7 +15,9 @@ import Reciclaje from "./components/Reciclaje";
 import Account from "./components/Account";
 
 import { AuthProvider } from "./contexts/UserProvider";
-import SolicitudesList from "./components/SolicitudesList";
+import EvidenciaList from "./components/EvidenciaList";
+import FormEvidencia from "./components/FormEvidencia";
+import EvidenciaLayout from "./components/EvidenciaLayout";
 
 function App() {
   return (
@@ -39,6 +42,10 @@ function App() {
               element={<Login />}
             />
             <Route
+              path="sign-up"
+              element={<SignUp />}
+            />
+            <Route
               path="app"
               element={<AppLayout />}
             >
@@ -60,21 +67,28 @@ function App() {
                 element={<Reciclaje />}
               />
               <Route
-                path="solicitudes"
-                element={<SolicitudesList />}
+                path="form"
+                element={<Form />}
               />
               <Route
                 path="basural"
                 element={<ReciclajeList />}
               />
               <Route
-                path="form"
-                element={<Form />}
-              />
-              <Route
                 path="user"
                 element={<Account />}
               />
+
+              <Route element={<EvidenciaLayout />}>
+                <Route
+                  path="form-evidencia"
+                  element={<FormEvidencia />}
+                />
+                <Route
+                  path="solicitudes"
+                  element={<EvidenciaList />}
+                />
+              </Route>
             </Route>
             <Route
               path="*"

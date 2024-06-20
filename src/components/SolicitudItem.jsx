@@ -3,18 +3,10 @@ import styles from "./ReciclajeItem.module.css";
 import { usePuntos } from "../contexts/PuntosProvider";
 import RecyclingIcon from "@mui/icons-material/Recycling";
 import DeleteIcon from "@mui/icons-material/Delete";
+import { useEffect } from "react";
 
-const formatDate = (date) =>
-  new Intl.DateTimeFormat("en", {
-    day: "numeric",
-    month: "long",
-    year: "numeric",
-  }).format(new Date(date));
-
-function SolicitudItem({ punto }) {
-  const { currentPunto, deletePunto } = usePuntos();
-
-  const { tipoPunto, id, position } = punto;
+function SolicitudItem({ evidencia }) {
+  const { idEvidencia, tipoPunto, estado } = evidencia;
 
   function handleDelete(e) {
     e.preventDefault();
@@ -23,16 +15,11 @@ function SolicitudItem({ punto }) {
 
   return (
     <li>
-      <Link
-        className={`${styles.cityItem} ${
-          id === currentPunto.id ? styles["cityItem--active"] : ""
-        }`}
-        to={`${id}?lat=${position.lat}&lng=${position.lng}`}
-      >
+      <Link className={`${styles.cityItem}`}>
         {tipoPunto === "Reciclaje" ? <RecyclingIcon /> : <DeleteIcon />}
 
         <h3 className={styles.name}>{tipoPunto}</h3>
-        <time className={styles.date}>Pendiente</time>
+        <time className={styles.date}>{estado.toUpperCase()}</time>
       </Link>
     </li>
   );

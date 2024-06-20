@@ -6,7 +6,6 @@ function User() {
   const { user } = useAuth();
   const navigate = useNavigate();
 
-  const avatar = "https://i.pravatar.cc/100?u=zz";
   function handleClick() {
     navigate("user");
   }
@@ -14,7 +13,7 @@ function User() {
   return (
     <div className={styles.user}>
       <img
-        src={avatar}
+        src="/user-profile.png"
         alt={user.fullName}
       />
       <span>Bienvenido, {user.fullName}</span>

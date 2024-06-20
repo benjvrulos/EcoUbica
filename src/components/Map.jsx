@@ -1,14 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import styles from "./Map.module.css";
 
-import {
-  MapContainer,
-  Marker,
-  Popup,
-  TileLayer,
-  useMap,
-  useMapEvents,
-} from "react-leaflet";
+import { MapContainer, Marker, Popup, TileLayer, useMap, useMapEvents } from "react-leaflet";
 import { useEffect, useState } from "react";
 import { usePuntos } from "../contexts/PuntosProvider";
 import { useGeolocation } from "../hooks/useGeoLocation";
@@ -22,11 +15,7 @@ function Map() {
   const [tempMarker, setTempMarker] = useState([]);
   const [mapPosition, setMapPostion] = useState([-33.5000852, -70.6162928]);
 
-  const {
-    isLoading: isLoadingPosition,
-    position: geolocationPosition,
-    getPosition,
-  } = useGeolocation();
+  const { isLoading: isLoadingPosition, position: geolocationPosition, getPosition } = useGeolocation();
 
   const [mapLat, mapLng] = useUrlPosition();
 
@@ -42,8 +31,11 @@ function Map() {
 
   useEffect(
     function () {
-      if (geolocationPosition)
+      if (geolocationPosition) {
+        console.log(geolocationPosition);
         setMapPostion([geolocationPosition.lat, geolocationPosition.lng]);
+        navigate("/app");
+      }
     },
     [geolocationPosition]
   );
@@ -69,27 +61,21 @@ function Map() {
           url="https://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png"
         />
 
-        {tempMarker.length > 0 && (
-          <Marker position={[tempMarker[0], tempMarker[1]]}></Marker>
-        )}
+        {tempMarker.length > 0 && <Marker position={[tempMarker[0], tempMarker[1]]}></Marker>}
 
         {puntosList.map((punto) => (
           <Marker
             eventHandlers={{
               click: (e) => {
                 setMapPostion([e.latlng.lat, e.latlng.lng]);
-                navigate(
-                  `puntos/${punto.id}?lat=${e.latlng.lat}&lng=${e.latlng.lng}`
-                );
+                navigate(`puntos/${punto.id}?lat=${e.latlng.lat}&lng=${e.latlng.lng}`);
               },
             }}
             position={[punto.position.lat, punto.position.lng]}
             key={punto.id}
           >
             <Popup>
-              <span>
-                Estado: {punto.estado ? punto.estado : "No hay información"}
-              </span>
+              <span>Estado: {punto.estado ? punto.estado : "No hay información"}</span>
             </Popup>
           </Marker>
         ))}

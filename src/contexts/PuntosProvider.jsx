@@ -1,16 +1,5 @@
-import {
-  createContext,
-  useCallback,
-  useContext,
-  useEffect,
-  useReducer,
-} from "react";
-import {
-  getPunto as getPuntoApi,
-  getPuntos,
-  createPunto as createPuntoApi,
-  deletePunto as deletePuntoApi,
-} from "../../services/appPuntos";
+import { createContext, useCallback, useContext, useEffect, useReducer } from "react";
+import { getPunto as getPuntoApi, getPuntos, createPunto as createPuntoApi, deletePunto as deletePuntoApi } from "../../services/appPuntos";
 
 const PuntosContext = createContext();
 
@@ -37,23 +26,15 @@ function reducer(state, action) {
       return {
         ...state,
         isLoading: false,
-        puntosList:
-          action.payload.role === "admin"
-            ? [...state.puntosList, action.payload.punto]
-            : state.puntosList,
-        currentPunto:
-          action.payload.role === "admin"
-            ? action.payload.punto
-            : state.currentPunto,
+        puntosList: action.payload.role === "admin" ? [...state.puntosList, action.payload.punto] : state.puntosList,
+        currentPunto: action.payload.role === "admin" ? action.payload.punto : state.currentPunto,
       };
 
     case "punto/deleted":
       return {
         ...state,
         isLoading: false,
-        puntosList: state.puntosList.filter(
-          (punto) => punto.id !== action.payload
-        ),
+        puntosList: state.puntosList.filter((punto) => punto.id !== action.payload),
       };
     case "rejected":
       return { ...state, isLoading: false, error: action.payload };
@@ -63,13 +44,8 @@ function reducer(state, action) {
 }
 
 function PuntosProvider({ children }) {
-  const [{ puntosList, isLoading, currentPunto, error }, dispatch] = useReducer(
-    reducer,
-    initialState
-  );
-  // const [cities, setCities] = useState([]);
-  // const [isLoading, setIsLoading] = useState(false);
-  // const [currentCity, setCurrentCity] = useState({});
+  const [{ puntosList, isLoading, currentPunto, error }, dispatch] = useReducer(reducer, initialState);
+
   useEffect(function () {
     async function fetchPuntos() {
       dispatch({ type: "loading" });
@@ -150,8 +126,7 @@ function PuntosProvider({ children }) {
 
 function usePuntos() {
   const context = useContext(PuntosContext);
-  if (context === undefined)
-    throw new Error("PuntosContext was used outside the PuntosProvider");
+  if (context === undefined) throw new Error("PuntosContext was used outside the PuntosProvider");
   return context;
 }
 
