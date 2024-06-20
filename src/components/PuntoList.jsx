@@ -1,4 +1,4 @@
-import ReciclajeItem from "./ReciclajeItem";
+import PuntoItem from "./PuntoItem";
 import styles from "./ReciclajeList.module.css";
 import Spinner from "./Spinner";
 import Message from "./Message";
@@ -6,7 +6,7 @@ import { usePuntos } from "../contexts/PuntosProvider";
 import { useLocation } from "react-router-dom";
 import { useAuth } from "../contexts/UserProvider";
 
-function ReciclajeList() {
+function PuntoList() {
   const { puntosList, isLoading } = usePuntos();
   const { user } = useAuth();
 
@@ -30,7 +30,7 @@ function ReciclajeList() {
   return (
     <ul className={styles.cityList}>
       {puntosFilter.map((punto) => (
-        <ReciclajeItem
+        <PuntoItem
           punto={punto}
           key={punto.id}
           role={isAdmin}
@@ -40,4 +40,4 @@ function ReciclajeList() {
   );
 }
 
-export default ReciclajeList;
+export default PuntoList;

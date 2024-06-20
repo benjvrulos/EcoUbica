@@ -23,7 +23,7 @@ function SolicitudItem({ evidencia }) {
       <Link className={`${styles.cityItem}`}>
         {tipoPunto === "Reciclaje" ? <RecyclingIcon /> : <DeleteIcon />}
 
-        <h3 className={styles.name}>ID Evidencia: {idEvidencia}</h3>
+        <h3 className={styles.name}>ID Aporte: {idEvidencia}</h3>
         <p className={styles.date}>{estado.toUpperCase()}</p>
       </Link>
     </li>

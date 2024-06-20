@@ -7,8 +7,9 @@ import Login from "./pages/Login";
 import SignUp from "./pages/SignUp";
 import PageNotFound from "./pages/PageNotFound";
 import AppLayout from "./pages/AppLayout";
-import ReciclajeList from "./components/ReciclajeList";
+import ReciclajeList from "./components/PuntoList";
 
+import Form from "./components/Form";
 import { PuntosProvider } from "./contexts/PuntosProvider";
 import Reciclaje from "./components/Reciclaje";
 import Account from "./components/Account";
@@ -17,6 +18,7 @@ import { AuthProvider } from "./contexts/UserProvider";
 import EvidenciaList from "./components/EvidenciaList";
 import FormEvidencia from "./components/FormEvidencia";
 import EvidenciaLayout from "./components/EvidenciaLayout";
+import PuntoList from "./components/PuntoList";
 
 function App() {
   return (
@@ -59,16 +61,23 @@ function App() {
               />
               <Route
                 path="puntos"
-                element={<ReciclajeList />}
+                element={<PuntoList />}
               />
               <Route
                 path="puntos/:id"
                 element={<Reciclaje />}
               />
-
+              <Route
+                path="form"
+                element={<Form />}
+              />
               <Route
                 path="basural"
-                element={<ReciclajeList />}
+                element={<PuntoList />}
+              />
+              <Route
+                path="reciclaje"
+                element={<PuntoList />}
               />
               <Route
                 path="user"
@@ -81,7 +90,7 @@ function App() {
                   element={<FormEvidencia />}
                 />
                 <Route
-                  path="solicitudes"
+                  path="aportes"
                   element={<EvidenciaList />}
                 />
               </Route>

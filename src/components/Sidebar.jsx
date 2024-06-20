@@ -10,9 +10,7 @@ function SideBar() {
       <AppNav />
       <Outlet />
       <footer className={styles.footer}>
-        <p className={styles.copyright}>
-          &copy; Copyright {new Date().getFullYear()} by EcoUbica
-        </p>
+        <p className={styles.copyright}>&copy; Copyright {new Date().getFullYear()} by EcoUbica</p>
       </footer>
     </div>
   );

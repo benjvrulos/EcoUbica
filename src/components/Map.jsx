@@ -7,9 +7,11 @@ import { usePuntos } from "../contexts/PuntosProvider";
 import { useGeolocation } from "../hooks/useGeoLocation";
 import Button from "./Button";
 import { useUrlPosition } from "../hooks/useUrlPosition";
+import { useAuth } from "../contexts/UserProvider";
 
 function Map() {
   const navigate = useNavigate();
+  const { user } = useAuth();
   const { puntosList } = usePuntos();
 
   const [tempMarker, setTempMarker] = useState([]);
@@ -80,6 +82,8 @@ function Map() {
           </Marker>
         ))}
         <ChangeCenter position={mapPosition} />
+
+        {user?.role === "admin" && <DetectClick />}
       </MapContainer>
     </div>
   );
@@ -91,15 +95,15 @@ function ChangeCenter({ position }) {
   return null;
 }
 
-// function DetectClick() {
-//   const navigate = useNavigate();
-//   useMapEvents({
-//     click: (e) => {
-//       const lat = e.latlng.lat;
-//       const lng = e.latlng.lng;
+function DetectClick() {
+  const navigate = useNavigate();
+  useMapEvents({
+    click: (e) => {
+      const lat = e.latlng.lat;
+      const lng = e.latlng.lng;
 
-//       navigate(`form?reverse=${true}&lat=${lat}&lng=${lng}`);
-//     },
-//   });
-// }
+      navigate(`form?reverse=${true}&lat=${lat}&lng=${lng}`);
+    },
+  });
+}
 export default Map;

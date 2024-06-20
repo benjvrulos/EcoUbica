@@ -11,7 +11,7 @@ const formatDate = (date) =>
     year: "numeric",
   }).format(new Date(date));
 
-function ReciclajeItem({ punto, role }) {
+function PuntoItem({ punto, role }) {
   const { currentPunto, deletePunto } = usePuntos();
 
   const date = new Date();
@@ -46,4 +46,4 @@ function ReciclajeItem({ punto, role }) {
   );
 }
 
-export default ReciclajeItem;
+export default PuntoItem;

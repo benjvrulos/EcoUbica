@@ -8,7 +8,7 @@ function SolicitudesList() {
   const { getEvidencia, evidenciaList, isLoading } = useEvidencias();
 
   if (isLoading) return <Spinner />;
-  if (!evidenciaList.length) return <Message message="Add your first city by clicking on a city on the map" />;
+  if (!evidenciaList.length) return <Message message="No tienes aportes solicitados" />;
 
   return (
     <ul className={styles.cityList}>
