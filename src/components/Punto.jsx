@@ -48,16 +48,19 @@ function Punto() {
       )}
 
       <div className={styles.containerBtns}>
-        <Button
-          onClick={(e) => {
-            e.preventDefault();
+        {tipoPunto === "Basural" && (
+          <Button
+            onClick={(e) => {
+              e.preventDefault();
 
-            navigate("/app/form-evidencia");
-          }}
-          type="primary"
-        >
-          {tipoPunto === "Reciclaje" ? "Reciclar" : "Limpiar"}
-        </Button>
+              navigate("/app/form-evidencia");
+            }}
+            type="primary"
+          >
+            Limpiar
+          </Button>
+        )}
+
         <BackButton />
       </div>
     </div>

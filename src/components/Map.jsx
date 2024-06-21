@@ -34,7 +34,6 @@ function Map() {
   useEffect(
     function () {
       if (geolocationPosition) {
-        console.log(geolocationPosition);
         setMapPostion([geolocationPosition.lat, geolocationPosition.lng]);
         navigate("/app");
       }
