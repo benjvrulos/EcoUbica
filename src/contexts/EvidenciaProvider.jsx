@@ -7,7 +7,6 @@ const initialState = {
   evidenciaList: [],
   isLoading: false,
   currentEvidencia: {},
-  error: "",
 };
 
 function reducer(state, action) {
@@ -16,6 +15,8 @@ function reducer(state, action) {
       return { ...state, isLoading: true };
     case "evidencias/loaded":
       return { ...state, isLoading: false, evidenciaList: action.payload };
+    case "evidencia/loaded":
+      return { ...state, isLoading: false, currentEvidencia: action.payload };
     case "rejected":
       return { ...state, isLoading: false, error: action.payload };
     default:

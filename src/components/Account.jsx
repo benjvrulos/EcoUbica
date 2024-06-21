@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/UserProvider";
 import Button from "./Button";
-import styles from "./PuntoVerde.module.css";
+import styles from "./Punto.module.css";
 
 function calcularNivel(nivel) {
   let maxMinValue;

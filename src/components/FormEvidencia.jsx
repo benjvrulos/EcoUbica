@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import BackButton from "./BackButton";
 import Button from "./Button";
 import styles from "./Form.module.css";
@@ -7,18 +7,20 @@ import FileUploadIcon from "@mui/icons-material/FileUpload";
 import { useAuth } from "../contexts/UserProvider";
 import Message from "./Message";
 import { createEvidencia } from "../../services/apiEvidencia";
+import { usePuntos } from "../contexts/PuntosProvider";
 function FormEvidencia() {
   const { user } = useAuth();
-
-  let location = useLocation();
+  const { currentPunto } = usePuntos();
   const [evidenceFile, setEvidenceFile] = useState(null);
   const [responsableName, setResponsableName] = useState("");
 
   async function handleSubmit(e) {
     e.preventDefault();
-    const formEvidencia = { tipoPunto: location.state.tipoPunto, responsableName, userId: user.idUser };
+    const newEvidencia = { idPunto: currentPunto.id, responsableName, userId: user.idUser, image: evidenceFile };
 
-    const resp = await createEvidencia(formEvidencia);
+    const resp = await createEvidencia(newEvidencia);
+
+    console.log(resp);
   }
 
   if (!user) {
@@ -41,7 +43,7 @@ function FormEvidencia() {
         <label htmlFor="nameOrOrganization">Tipo Punto</label>
         <input
           id="nameOrOrganization"
-          value={location.state.tipoPunto}
+          value={currentPunto.tipoPunto}
           disabled
         />
       </div>

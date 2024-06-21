@@ -10,7 +10,7 @@ function BackButton({ type }) {
       onClick={(e) => {
         e.preventDefault();
 
-        navigate("/app/puntos");
+        navigate(-1);
       }}
     >
       &larr; Atrás

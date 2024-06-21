@@ -4,23 +4,15 @@ import styles from "./ReciclajeItem.module.css";
 import RecyclingIcon from "@mui/icons-material/Recycling";
 import DeleteIcon from "@mui/icons-material/Delete";
 
-const formatDate = (date) =>
-  new Intl.DateTimeFormat("en", {
-    day: "numeric",
-    month: "long",
-    year: "numeric",
-  }).format(new Date(date));
-function SolicitudItem({ evidencia }) {
-  const { idEvidencia, tipoPunto, estado, created_at } = evidencia;
-
-  // function handleDelete(e) {
-  //   e.preventDefault();
-  //   deletePunto(id);
-  // }
+function EvidenciaItem({ evidencia }) {
+  const { idEvidencia, tipoPunto, estado } = evidencia;
 
   return (
     <li>
-      <Link className={`${styles.cityItem}`}>
+      <Link
+        className={`${styles.cityItem}`}
+        to={`${idEvidencia}`}
+      >
         {tipoPunto === "Reciclaje" ? <RecyclingIcon /> : <DeleteIcon />}
 
         <h3 className={styles.name}>ID Aporte: {idEvidencia}</h3>
@@ -30,4 +22,4 @@ function SolicitudItem({ evidencia }) {
   );
 }
 
-export default SolicitudItem;
+export default EvidenciaItem;

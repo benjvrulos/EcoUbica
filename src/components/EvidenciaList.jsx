@@ -1,6 +1,6 @@
 import styles from "./ReciclajeList.module.css";
 import Spinner from "./Spinner";
-import SolicitudItem from "./SolicitudItem";
+import SolicitudItem from "./EvidenciaItem";
 import { useEvidencias } from "../contexts/EvidenciaProvider";
 import Message from "./Message";
 

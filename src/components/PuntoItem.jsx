@@ -26,7 +26,7 @@ function PuntoItem({ punto, role }) {
     <li>
       <Link
         className={`${styles.cityItem} ${id === currentPunto.id ? styles["cityItem--active"] : ""}`}
-        to={`${id}?lat=${position.lat}&lng=${position.lng}`}
+        to={`/app/puntos/${id}?lat=${position.lat}&lng=${position.lng}`}
       >
         {tipoPunto === "Reciclaje" ? <RecyclingIcon /> : <DeleteIcon />}
 

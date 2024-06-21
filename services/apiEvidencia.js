@@ -1,4 +1,4 @@
-import supabase from "./supabase";
+import supabase, { supabaseUrl } from "./supabase";
 
 export async function getEvidenciasApi(userId) {
   const { data, error } = await supabase.from("evidencia").select("*").eq("userId", userId);
@@ -9,8 +9,16 @@ export async function getEvidenciasApi(userId) {
 
   return data;
 }
-export async function createEvidencia(formEvidencia) {
-  const { data, error } = await supabase.from("evidencia").insert([formEvidencia]).select();
 
-  return data[0];
+export async function createEvidencia(newEvidencia) {
+  console.log(newEvidencia);
+  const imageName = `punto/${newEvidencia.idPunto}.jpg`;
+  const imagePath = `${supabaseUrl}/storage/v1/object/public/evidenciaImages/${imageName}`;
+
+  console.log(imageName);
+  const { data, error } = await supabase.from("evidencia").insert([{ ...newEvidencia, image: imagePath }]);
+
+  const { error: storageError } = await supabase.storage.from("evidenciaImages").upload(imageName, newEvidencia.image);
+
+  return data;
 }

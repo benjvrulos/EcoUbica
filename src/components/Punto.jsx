@@ -1,5 +1,5 @@
 import { useNavigate, useParams } from "react-router-dom";
-import styles from "./PuntoVerde.module.css";
+import styles from "./Punto.module.css";
 import { useEffect } from "react";
 import { usePuntos } from "../contexts/PuntosProvider";
 import Spinner from "./Spinner";
@@ -8,7 +8,7 @@ import RecyclingIcon from "@mui/icons-material/Recycling";
 import DeleteIcon from "@mui/icons-material/Delete";
 import Button from "./Button";
 
-function Reciclaje() {
+function Punto() {
   const { id } = useParams();
   const navigate = useNavigate();
 
@@ -52,7 +52,7 @@ function Reciclaje() {
           onClick={(e) => {
             e.preventDefault();
 
-            navigate("/app/form-evidencia", { state: { tipoPunto } });
+            navigate("/app/form-evidencia");
           }}
           type="primary"
         >
@@ -64,4 +64,4 @@ function Reciclaje() {
   );
 }
 
-export default Reciclaje;
+export default Punto;
