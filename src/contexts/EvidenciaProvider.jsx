@@ -25,9 +25,9 @@ function reducer(state, action) {
 }
 
 function EvidenciaProvider({ children, userId }) {
-  const [{ evidenciaList, isLoading }, dispatch] = useReducer(reducer, initialState);
+  const [{ evidenciaList, isLoading, currentEvidencia }, dispatch] = useReducer(reducer, initialState);
 
-  const getEvidencia = useCallback(async function getEvidencia(userId) {
+  async function getEvidencias(userId) {
     dispatch({ type: "loading" });
 
     try {
@@ -39,12 +39,12 @@ function EvidenciaProvider({ children, userId }) {
         payload: "Contraseña o email incorrecto",
       });
     }
-  });
+  }
 
   return (
     <EvidenciaContext.Provider
       value={{
-        getEvidencia,
+        getEvidencias,
         evidenciaList,
         isLoading,
       }}

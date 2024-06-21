@@ -7,7 +7,7 @@ import Button from "./Button";
 
 function Evidencia() {
   const { evidenciaList } = useEvidencias();
-  console.log(evidenciaList);
+
   const { id } = useParams();
   const navigate = useNavigate();
   const evidencia = evidenciaList.find((evidencia) => evidencia.idEvidencia === Number(id));
@@ -33,6 +33,7 @@ function Evidencia() {
           <p>{idPunto}</p>
         </div>
       </div>
+
       {image && (
         <div className={styles.row}>
           <h6>Evidencia:</h6>

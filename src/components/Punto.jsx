@@ -13,7 +13,6 @@ function Punto() {
   const navigate = useNavigate();
 
   const { getPunto, currentPunto, isLoading } = usePuntos();
-  // const { user } = useAuth();
 
   useEffect(
     function () {
@@ -21,31 +20,44 @@ function Punto() {
     },
     [id, getPunto]
   );
-
-  const { address, tipoPunto, description } = currentPunto;
+  console.log(currentPunto);
+  const { address, tipoPunto, description, image } = currentPunto;
 
   if (isLoading) return <Spinner />;
   return (
     <div className={styles.city}>
-      <div className={styles.row}>
-        <h6>Tipo de Punto:</h6>
-        <div className={styles.tipoPunto}>
-          <span>{tipoPunto === "Reciclaje" ? <RecyclingIcon fontSize="large" /> : <DeleteIcon fontSize="large" />}</span>
-          <h3>{tipoPunto}</h3>
+      <div className={styles.headerAporte}>
+        <div className={styles.row}>
+          <h6>Tipo de Punto:</h6>
+          <div className={styles.tipoPunto}>
+            <span>{tipoPunto === "Reciclaje" ? <RecyclingIcon fontSize="large" /> : <DeleteIcon fontSize="large" />}</span>
+            <h3>{tipoPunto}</h3>
+          </div>
+        </div>
+
+        <div className={styles.row}>
+          <h6>Direccion</h6>
+          <p>{address}</p>
         </div>
       </div>
-
-      <div className={styles.row}>
-        <h6>Direccion</h6>
-        <p>{address}</p>
-      </div>
-
       {description && (
         <div className={styles.row}>
           <h6>Descripcion</h6>
           <p>{description}</p>
         </div>
       )}
+
+      <div className={styles.row}>
+        <h6>Foto:</h6>
+        {image ? (
+          <img
+            className={styles.aporteImg}
+            src={image}
+          />
+        ) : (
+          "no hay imagen"
+        )}
+      </div>
 
       <div className={styles.containerBtns}>
         {tipoPunto === "Basural" && (
@@ -60,7 +72,6 @@ function Punto() {
             Limpiar
           </Button>
         )}
-
         <BackButton />
       </div>
     </div>

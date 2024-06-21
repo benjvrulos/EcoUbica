@@ -7,11 +7,11 @@ import { useEffect } from "react";
 
 function EvidenciaLayout() {
   const { user, isAuthenticated } = useAuth();
-  const { getEvidencia } = useEvidencias();
+  const { getEvidencias } = useEvidencias();
 
   useEffect(
     function () {
-      if (isAuthenticated) getEvidencia(user.idUser);
+      if (isAuthenticated) getEvidencias(user.idUser);
     },
     [user]
   );
