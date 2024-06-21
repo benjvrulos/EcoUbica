@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useReducer } from "react";
+import { createContext, useCallback, useContext, useEffect, useReducer } from "react";
 import { getEvidenciasApi } from "../../services/apiEvidencia";
 
 const EvidenciaContext = createContext();
@@ -26,26 +26,25 @@ function reducer(state, action) {
 
 function EvidenciaProvider({ children, userId }) {
   const [{ evidenciaList, isLoading }, dispatch] = useReducer(reducer, initialState);
-  useEffect(function () {
-    async function getEvidencia(userId) {
-      dispatch({ type: "loading" });
 
-      try {
-        const data = await getEvidenciasApi(userId);
-        dispatch({ type: "evidencias/loaded", payload: data });
-      } catch (error) {
-        dispatch({
-          type: "rejected",
-          payload: "Contraseña o email incorrecto",
-        });
-      }
+  const getEvidencia = useCallback(async function getEvidencia(userId) {
+    dispatch({ type: "loading" });
+
+    try {
+      const data = await getEvidenciasApi(userId);
+      dispatch({ type: "evidencias/loaded", payload: data });
+    } catch (error) {
+      dispatch({
+        type: "rejected",
+        payload: "Contraseña o email incorrecto",
+      });
     }
-    getEvidencia(userId);
-  }, []);
+  });
 
   return (
     <EvidenciaContext.Provider
       value={{
+        getEvidencia,
         evidenciaList,
         isLoading,
       }}

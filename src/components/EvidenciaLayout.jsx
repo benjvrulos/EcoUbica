@@ -1,11 +1,20 @@
 import { Link, Outlet } from "react-router-dom";
-import { EvidenciaProvider } from "../contexts/EvidenciaProvider";
 import { useAuth } from "../contexts/UserProvider";
 import Message from "./Message";
 import Button from "./Button";
+import { useEvidencias } from "../contexts/EvidenciaProvider";
+import { useEffect } from "react";
 
 function EvidenciaLayout() {
   const { user, isAuthenticated } = useAuth();
+  const { getEvidencia } = useEvidencias();
+
+  useEffect(
+    function () {
+      if (isAuthenticated) getEvidencia(user.idUser);
+    },
+    [user]
+  );
 
   if (!isAuthenticated)
     return (
@@ -17,11 +26,7 @@ function EvidenciaLayout() {
       </>
     );
 
-  return (
-    <EvidenciaProvider userId={user.idUser}>
-      <Outlet />
-    </EvidenciaProvider>
-  );
+  return <Outlet />;
 }
 
 export default EvidenciaLayout;

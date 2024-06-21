@@ -81,3 +81,18 @@
   display: flex;
   justify-content: space-around;
 }
+
+.aporteImg {
+  width: 150px;
+}
+
+.headerAporte {
+  display: flex;
+  justify-content: space-between;
+}
+
+.tipoPuntoHeader {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}

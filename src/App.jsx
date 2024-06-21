@@ -19,92 +19,95 @@ import EvidenciaList from "./components/EvidenciaList";
 import FormEvidencia from "./components/FormEvidencia";
 import EvidenciaLayout from "./components/EvidenciaLayout";
 import Evidencia from "./components/Evidencia";
+import { EvidenciaProvider } from "./contexts/EvidenciaProvider";
 
 function App() {
   return (
     <AuthProvider>
       <PuntosProvider>
-        <BrowserRouter>
-          <Routes>
-            <Route
-              index
-              element={<Homepage />}
-            />
-            <Route
-              path="product"
-              element={<Product />}
-            />
-            <Route
-              path="pricing"
-              element={<Pricing />}
-            />
-            <Route
-              path="login"
-              element={<Login />}
-            />
-            <Route
-              path="sign-up"
-              element={<SignUp />}
-            />
-            <Route
-              path="app"
-              element={<AppLayout />}
-            >
+        <EvidenciaProvider>
+          <BrowserRouter>
+            <Routes>
               <Route
                 index
-                element={
-                  <Navigate
-                    replace
-                    to="puntos"
-                  />
-                }
+                element={<Homepage />}
               />
               <Route
-                path="puntos"
-                element={<PuntoList />}
+                path="product"
+                element={<Product />}
               />
               <Route
-                path="puntos/:id"
-                element={<Punto />}
+                path="pricing"
+                element={<Pricing />}
               />
               <Route
-                path="form"
-                element={<Form />}
+                path="login"
+                element={<Login />}
               />
               <Route
-                path="basural"
-                element={<PuntoList />}
+                path="sign-up"
+                element={<SignUp />}
               />
               <Route
-                path="reciclaje"
-                element={<PuntoList />}
-              />
-              <Route
-                path="user"
-                element={<Account />}
-              />
+                path="app"
+                element={<AppLayout />}
+              >
+                <Route
+                  index
+                  element={
+                    <Navigate
+                      replace
+                      to="puntos"
+                    />
+                  }
+                />
+                <Route
+                  path="puntos"
+                  element={<PuntoList />}
+                />
+                <Route
+                  path="puntos/:id"
+                  element={<Punto />}
+                />
+                <Route
+                  path="form"
+                  element={<Form />}
+                />
+                <Route
+                  path="basural"
+                  element={<PuntoList />}
+                />
+                <Route
+                  path="reciclaje"
+                  element={<PuntoList />}
+                />
+                <Route
+                  path="user"
+                  element={<Account />}
+                />
 
-              <Route element={<EvidenciaLayout />}>
-                <Route
-                  path="form-evidencia"
-                  element={<FormEvidencia />}
-                />
-                <Route
-                  path="aportes"
-                  element={<EvidenciaList />}
-                />
-                <Route
-                  path="aportes/:id"
-                  element={<Evidencia />}
-                />
+                <Route element={<EvidenciaLayout />}>
+                  <Route
+                    path="form-evidencia"
+                    element={<FormEvidencia />}
+                  />
+                  <Route
+                    path="aportes"
+                    element={<EvidenciaList />}
+                  />
+                  <Route
+                    path="aportes/:id"
+                    element={<Evidencia />}
+                  />
+                </Route>
               </Route>
-            </Route>
-            <Route
-              path="*"
-              element={<PageNotFound />}
-            />
-          </Routes>
-        </BrowserRouter>
+              <Route
+                path="*"
+                element={<PageNotFound />}
+              />
+            </Routes>
+          </BrowserRouter>
+        </EvidenciaProvider>
       </PuntosProvider>
     </AuthProvider>
   );
