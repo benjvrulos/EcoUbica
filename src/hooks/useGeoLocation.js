@@ -15,12 +15,14 @@ export function useGeolocation(defaultPosition = null) {
           lat: pos.coords.latitude,
           lng: pos.coords.longitude,
         });
+        setAccuracy(position.coords.accuracy);
         setIsLoading(false);
       },
       (error) => {
         setError(error.message);
         setIsLoading(false);
-      }
+      },
+      { enableHighAccuracy: true }
     );
   }
 

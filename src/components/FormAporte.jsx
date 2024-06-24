@@ -1,14 +1,16 @@
 import { useState } from "react";
+import { useAuth } from "../contexts/UserProvider";
+import { usePuntos } from "../contexts/PuntosProvider";
+
 import { Link } from "react-router-dom";
+import styles from "./Form.module.css";
 import BackButton from "./BackButton";
 import Button from "./Button";
-import styles from "./Form.module.css";
 import FileUploadIcon from "@mui/icons-material/FileUpload";
-import { useAuth } from "../contexts/UserProvider";
 import Message from "./Message";
-import { createEvidencia } from "../../services/apiEvidencia";
-import { usePuntos } from "../contexts/PuntosProvider";
-function FormEvidencia() {
+import { createAporte } from "../../services/apiAportes";
+
+function FormAporte() {
   const { user } = useAuth();
   const { currentPunto } = usePuntos();
   const [evidenceFile, setEvidenceFile] = useState(null);
@@ -16,11 +18,9 @@ function FormEvidencia() {
 
   async function handleSubmit(e) {
     e.preventDefault();
-    const newEvidencia = { idPunto: currentPunto.id, responsableName, userId: user.idUser, image: evidenceFile };
+    const newAporte = { idPunto: currentPunto.id, responsableName, userId: user.idUser, image: evidenceFile };
 
-    const resp = await createEvidencia(newEvidencia);
-
-    console.log(resp);
+    const resp = await createAporte(newAporte);
   }
 
   if (!user) {
@@ -82,4 +82,4 @@ function FormEvidencia() {
   );
 }
 
-export default FormEvidencia;
+export default FormAporte;

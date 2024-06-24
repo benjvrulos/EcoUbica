@@ -8,24 +8,23 @@ import SignUp from "./pages/SignUp";
 import PageNotFound from "./pages/PageNotFound";
 import AppLayout from "./pages/AppLayout";
 import PuntoList from "./components/PuntoList";
-
 import Form from "./components/Form";
-import { PuntosProvider } from "./contexts/PuntosProvider";
 import Punto from "./components/Punto";
 import Account from "./components/Account";
+import AporteLayout from "./components/AporteLayout";
+import AporteList from "./components/AporteList";
+import FormAporte from "./components/FormAporte";
 
+import { PuntosProvider } from "./contexts/PuntosProvider";
 import { AuthProvider } from "./contexts/UserProvider";
-import EvidenciaList from "./components/EvidenciaList";
-import FormEvidencia from "./components/FormEvidencia";
-import EvidenciaLayout from "./components/EvidenciaLayout";
-import Evidencia from "./components/Evidencia";
-import { EvidenciaProvider } from "./contexts/EvidenciaProvider";
+import { AporteProvider } from "./contexts/AporteProvider";
+import Aporte from "./components/APorte";
 
 function App() {
   return (
     <AuthProvider>
       <PuntosProvider>
-        <EvidenciaProvider>
+        <AporteProvider>
           <BrowserRouter>
             <Routes>
               <Route
@@ -86,18 +85,18 @@ function App() {
                   element={<Account />}
                 />
 
-                <Route element={<EvidenciaLayout />}>
+                <Route element={<AporteLayout />}>
                   <Route
                     path="form-evidencia"
-                    element={<FormEvidencia />}
+                    element={<FormAporte />}
                   />
                   <Route
                     path="aportes"
-                    element={<EvidenciaList />}
+                    element={<AporteList />}
                   />
                   <Route
                     path="aportes/:id"
-                    element={<Evidencia />}
+                    element={<Aporte />}
                   />
                 </Route>
               </Route>
@@ -107,7 +106,7 @@ function App() {
               />
             </Routes>
           </BrowserRouter>
-        </EvidenciaProvider>
+        </AporteProvider>
       </PuntosProvider>
     </AuthProvider>
   );

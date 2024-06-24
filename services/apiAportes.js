@@ -1,6 +1,6 @@
 import supabase, { supabaseUrl } from "./supabase";
 
-export async function getEvidenciasApi(userId) {
+export async function getAllAportesApi(userId) {
   const { data, error } = await supabase.from("evidencia").select("*").eq("userId", userId);
   if (error) {
     console.error(error);
@@ -10,7 +10,7 @@ export async function getEvidenciasApi(userId) {
   return data;
 }
 
-export async function createEvidencia(newEvidencia) {
+export async function createAporte(newEvidencia) {
   console.log(newEvidencia);
   const imageName = `punto/${newEvidencia.idPunto}.jpg`;
   const imagePath = `${supabaseUrl}/storage/v1/object/public/evidenciaImages/${imageName}`;

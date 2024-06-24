@@ -20,7 +20,7 @@ function Punto() {
     },
     [id, getPunto]
   );
-  console.log(currentPunto);
+
   const { address, tipoPunto, description, image } = currentPunto;
 
   if (isLoading) return <Spinner />;

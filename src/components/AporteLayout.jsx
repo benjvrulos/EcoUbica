@@ -1,17 +1,17 @@
-import { Link, Outlet } from "react-router-dom";
+import { useEffect } from "react";
+import { useAportes } from "../contexts/AporteProvider";
 import { useAuth } from "../contexts/UserProvider";
+import { Link, Outlet } from "react-router-dom";
 import Message from "./Message";
 import Button from "./Button";
-import { useEvidencias } from "../contexts/EvidenciaProvider";
-import { useEffect } from "react";
 
-function EvidenciaLayout() {
+function AporteLayout() {
   const { user, isAuthenticated } = useAuth();
-  const { getEvidencias } = useEvidencias();
+  const { getAllAportes } = useAportes();
 
   useEffect(
     function () {
-      if (isAuthenticated) getEvidencias(user.idUser);
+      if (isAuthenticated) getAllAportes(user.idUser);
     },
     [user]
   );
@@ -29,4 +29,4 @@ function EvidenciaLayout() {
   return <Outlet />;
 }
 
-export default EvidenciaLayout;
+export default AporteLayout;

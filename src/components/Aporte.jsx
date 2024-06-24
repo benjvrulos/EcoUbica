@@ -1,18 +1,18 @@
 import styles from "./Punto.module.css";
-import { useEvidencias } from "../contexts/EvidenciaProvider";
+import { useAportes } from "../contexts/AporteProvider";
 import { useNavigate, useParams } from "react-router-dom";
 
 import BackButton from "./BackButton";
 import Button from "./Button";
 
-function Evidencia() {
-  const { evidenciaList } = useEvidencias();
+function Aporte() {
+  const { aporteList } = useAportes();
 
   const { id } = useParams();
   const navigate = useNavigate();
-  const evidencia = evidenciaList.find((evidencia) => evidencia.idEvidencia === Number(id));
+  const aporte = aporteList.find((evidencia) => evidencia.idEvidencia === Number(id));
 
-  const { responsableName, estado, image, idPunto } = evidencia;
+  const { responsableName, estado, image, idPunto } = aporte;
 
   return (
     <div className={styles.city}>
@@ -61,4 +61,4 @@ function Evidencia() {
   );
 }
 
-export default Evidencia;
+export default Aporte;

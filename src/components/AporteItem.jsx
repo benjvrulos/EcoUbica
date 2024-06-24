@@ -4,8 +4,8 @@ import styles from "./ReciclajeItem.module.css";
 import RecyclingIcon from "@mui/icons-material/Recycling";
 import DeleteIcon from "@mui/icons-material/Delete";
 
-function EvidenciaItem({ evidencia }) {
-  const { idEvidencia, tipoPunto, estado } = evidencia;
+function AporteItem({ aporte }) {
+  const { idEvidencia, tipoPunto, estado } = aporte;
 
   return (
     <li>
@@ -22,4 +22,4 @@ function EvidenciaItem({ evidencia }) {
   );
 }
 
-export default EvidenciaItem;
+export default AporteItem;
