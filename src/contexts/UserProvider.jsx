@@ -51,7 +51,7 @@ function AuthProvider({ children }) {
       const idUser = data.user.id;
       const respCreateUserInfo = await createUserInfo(fullName, idUser);
       const userInfo = await fetchUserInfo(idUser);
-      console.log(userInfo);
+
       const userFull = { ...userInfo[0], correo: user.email };
       dispatch({ type: "login", payload: userFull });
     } catch (error) {

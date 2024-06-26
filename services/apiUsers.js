@@ -31,7 +31,7 @@ export async function signUpApi(email, password) {
 }
 
 export async function createUserInfo(fullName, idUser) {
-  const resp = await supabase.from("usersInfo").insert({ idUser, fullName, role: "user", experiencia: 0, nivel: "principiante" });
+  const resp = await supabase.from("usersInfo").insert({ idUser, fullName, role: "user" });
   return resp;
 }
 
