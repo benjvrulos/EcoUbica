@@ -46,22 +46,19 @@ function reducer(state, action) {
 function PuntosProvider({ children }) {
   const [{ puntosList, isLoading, currentPunto, error }, dispatch] = useReducer(reducer, initialState);
 
-  useEffect(function () {
-    async function fetchPuntos() {
-      dispatch({ type: "loading" });
-      try {
-        const data = await getPuntos();
+  async function fetchPuntos(comunaId) {
+    dispatch({ type: "loading" });
+    try {
+      const data = await getPuntos(comunaId);
 
-        dispatch({ type: "puntos/loaded", payload: data });
-      } catch (error) {
-        dispatch({
-          type: "rejected",
-          payload: "There was an error loading puntos...",
-        });
-      }
+      dispatch({ type: "puntos/loaded", payload: data });
+    } catch (error) {
+      dispatch({
+        type: "rejected",
+        payload: "There was an error loading puntos...",
+      });
     }
-    fetchPuntos();
-  }, []);
+  }
 
   const getPunto = useCallback(
     async function getPunto(id) {
@@ -115,6 +112,7 @@ function PuntosProvider({ children }) {
         currentPunto,
         getPunto,
         error,
+        fetchPuntos,
         createPunto,
         deletePunto,
       }}

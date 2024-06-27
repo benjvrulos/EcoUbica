@@ -12,12 +12,9 @@ export default function Homepage() {
           <br />
           tu amigo que te ayuda a reciclar
         </h1>
-        <h2>
-          EcoUbica es una aplicación que te permite, consultar, registrar y
-          actualizar puntos verdes de interés.
-        </h2>
+        <h2>EcoUbica es una aplicación que te permite, consultar, registrar y actualizar puntos verdes de interés.</h2>
         <Link
-          to="/app"
+          to="/login"
           className="cta"
         >
           Comienza ahora ya

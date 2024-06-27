@@ -19,6 +19,7 @@ import { PuntosProvider } from "./contexts/PuntosProvider";
 import { AuthProvider } from "./contexts/UserProvider";
 import { AporteProvider } from "./contexts/AporteProvider";
 import Aporte from "./components/APorte";
+import ProtectedRoute from "./pages/ProtectedRoute";
 
 function App() {
   return (
@@ -49,7 +50,11 @@ function App() {
               />
               <Route
                 path="app"
-                element={<AppLayout />}
+                element={
+                  <ProtectedRoute>
+                    <AppLayout />
+                  </ProtectedRoute>
+                }
               >
                 <Route
                   index
@@ -85,7 +90,13 @@ function App() {
                   element={<Account />}
                 />
 
-                <Route element={<AporteLayout />}>
+                <Route
+                  element={
+                    <ProtectedRoute>
+                      <AporteLayout />
+                    </ProtectedRoute>
+                  }
+                >
                   <Route
                     path="form-evidencia"
                     element={<FormAporte />}

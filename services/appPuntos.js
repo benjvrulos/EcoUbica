@@ -1,10 +1,7 @@
 import supabase from "./supabase";
 
-export async function getPuntos() {
-  const { data, error } = await supabase
-    .from("puntos")
-    .select("*")
-    .eq("aceptado", true);
+export async function getPuntos(comunaId) {
+  const { data, error } = await supabase.from("puntos").select("*").eq("comunaId", comunaId);
   if (error) {
     console.error(error);
     throw new Error("Puntos could not be loaded");
@@ -46,10 +43,7 @@ export async function createPunto(punto, role) {
       throw new Error("Unknown role");
   }
 
-  const { data, error } = await supabase
-    .from("puntos")
-    .insert([puntoCreated])
-    .select();
+  const { data, error } = await supabase.from("puntos").insert([puntoCreated]).select();
 
   if (error) {
     console.log(error);
