@@ -15,8 +15,8 @@ function PuntoItem({ punto, role }) {
   const { currentPunto, deletePunto } = usePuntos();
 
   const date = new Date();
-  const { tipoPunto, id, position } = punto;
-
+  const { id, position, address } = punto;
+  console.log();
   function handleDelete(e) {
     e.preventDefault();
     deletePunto(id);
@@ -28,9 +28,8 @@ function PuntoItem({ punto, role }) {
         className={`${styles.cityItem} ${id === currentPunto.id ? styles["cityItem--active"] : ""}`}
         to={`/app/puntos/${id}?lat=${position.lat}&lng=${position.lng}`}
       >
-        {tipoPunto === "Reciclaje" ? <RecyclingIcon /> : <DeleteIcon />}
-
-        <h3 className={styles.name}>{tipoPunto}</h3>
+        <RecyclingIcon />
+        <h3 className={styles.name}>{address.split(/,(.*)/s)[0]}</h3>
         <time className={styles.date}>{formatDate(date)}</time>
 
         {role && (

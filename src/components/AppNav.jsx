@@ -8,12 +8,7 @@ function AppNav() {
         <li>
           <NavLink to="puntos">Todo</NavLink>
         </li>
-        <li>
-          <NavLink to="reciclaje">Reciclaje</NavLink>
-        </li>
-        <li>
-          <NavLink to="basural">Basural</NavLink>
-        </li>
+
         <li>
           <NavLink to="aportes">Aportes</NavLink>
         </li>

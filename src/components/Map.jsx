@@ -21,6 +21,10 @@ function Map() {
 
   const [mapLat, mapLng] = useUrlPosition();
 
+  useEffect(() => {
+    setMapPostion([puntosList[0]?.position ? puntosList[0].position.lat : -33.5000852, puntosList[0]?.position ? puntosList[0].position.lng : -70.6162928]);
+  }, [puntosList]);
+
   useEffect(
     function () {
       if (mapLat && mapLng) {

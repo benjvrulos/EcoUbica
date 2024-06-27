@@ -50,7 +50,7 @@ function PuntosProvider({ children }) {
     dispatch({ type: "loading" });
     try {
       const data = await getPuntos(comunaId);
-
+      console.log(data);
       dispatch({ type: "puntos/loaded", payload: data });
     } catch (error) {
       dispatch({
