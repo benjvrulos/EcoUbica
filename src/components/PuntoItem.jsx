@@ -2,21 +2,12 @@ import { Link } from "react-router-dom";
 import styles from "./ReciclajeItem.module.css";
 import { usePuntos } from "../contexts/PuntosProvider";
 import RecyclingIcon from "@mui/icons-material/Recycling";
-import DeleteIcon from "@mui/icons-material/Delete";
-
-const formatDate = (date) =>
-  new Intl.DateTimeFormat("en", {
-    day: "numeric",
-    month: "long",
-    year: "numeric",
-  }).format(new Date(date));
 
 function PuntoItem({ punto, role }) {
   const { currentPunto, deletePunto } = usePuntos();
 
-  const date = new Date();
   const { id, position, address } = punto;
-  console.log();
+
   function handleDelete(e) {
     e.preventDefault();
     deletePunto(id);
@@ -30,7 +21,7 @@ function PuntoItem({ punto, role }) {
       >
         <RecyclingIcon />
         <h3 className={styles.name}>{address.split(/,(.*)/s)[0]}</h3>
-        <time className={styles.date}>{formatDate(date)}</time>
+        <time className={styles.date}>ID: {id}</time>
 
         {role && (
           <button

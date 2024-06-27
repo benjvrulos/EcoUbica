@@ -1,5 +1,5 @@
 import { createContext, useContext, useReducer } from "react";
-import { createUserInfo, fetchUserInfo, loginApi, logoutApi, signUpApi } from "../../services/apiUsers";
+import { createAccount, fetchAccount, loginApi, logoutApi, signUpApi } from "../../services/apiUsers";
 
 const AuthContext = createContext();
 
@@ -15,7 +15,9 @@ function reducer(state, action) {
     case "loading":
       return { ...state, isLoading: true };
     case "login":
-      return { ...state, user: action.payload, isAuthenticated: true };
+      return { ...state, user: action.payload, isAuthenticated: true, isLoading: false };
+    case "sign-up":
+      return { ...state, user: action.payload, isAuthenticated: true, isLoading: false };
     case "logout":
       return { ...state, user: null, isAuthenticated: false };
     case "rejected":
@@ -33,9 +35,9 @@ function AuthProvider({ children }) {
 
     try {
       const { user } = await loginApi(email, password);
-      const userInfo = await fetchUserInfo(user.id);
-      const userFull = { ...userInfo[0], correo: user.email };
-      dispatch({ type: "login", payload: userFull });
+      const account = await fetchAccount(user.id);
+      const accountFull = { ...account[0], email: user.email };
+      dispatch({ type: "login", payload: accountFull });
     } catch (error) {
       dispatch({
         type: "rejected",
@@ -48,13 +50,15 @@ function AuthProvider({ children }) {
     dispatch({ type: "loading" });
     try {
       const data = await signUpApi(email, password);
-      const idUser = data.user.id;
-      const respCreateUserInfo = await createUserInfo(fullName, idUser);
-      const userInfo = await fetchUserInfo(idUser);
+      const userId = data.user.id;
 
-      const userFull = { ...userInfo[0], correo: user.email };
-      dispatch({ type: "login", payload: userFull });
+      const respCreateUserInfo = await createAccount(fullName, userId);
+      const account = await fetchAccount(userId);
+      const accountFull = { ...account[0], email };
+      console.log(accountFull);
+      dispatch({ type: "sign-up", payload: accountFull });
     } catch (error) {
+      console.log(error);
       dispatch({
         type: "rejected",
         payload: "Contraseña o email incorrecto",

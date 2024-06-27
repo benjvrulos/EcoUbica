@@ -5,6 +5,7 @@ import styles from "./Punto.module.css";
 
 function Account() {
   const { user, logout } = useAuth();
+
   const navigate = useNavigate();
 
   return (
@@ -27,7 +28,7 @@ function Account() {
 
       <div className={styles.row}>
         <h6>Correo</h6>
-        <p>{user.correo}</p>
+        <p>{user.email}</p>
       </div>
 
       <div className={styles.buttons}>

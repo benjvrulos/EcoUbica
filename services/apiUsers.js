@@ -30,13 +30,13 @@ export async function signUpApi(email, password) {
   return data;
 }
 
-export async function createUserInfo(fullName, idUser) {
-  const resp = await supabase.from("usersInfo").insert({ idUser, fullName, role: "user" });
+export async function createAccount(fullName, userId) {
+  const resp = await supabase.from("account").insert({ userId, fullName, role: "user" });
   return resp;
 }
 
-export async function fetchUserInfo(idUser) {
-  let { data: userInfo, error } = await supabase.from("usersInfo").select().eq("idUser", idUser);
+export async function fetchAccount(userId) {
+  let { data: userInfo, error } = await supabase.from("account").select().eq("userId", userId);
   if (error) {
     throw new Error("Unknown");
   }
