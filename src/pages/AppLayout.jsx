@@ -1,4 +1,3 @@
-import { useNavigate } from "react-router-dom";
 import Map from "../components/Map";
 import SideBar from "../components/SideBar";
 import User from "../components/User";
@@ -14,7 +13,7 @@ function AppLayout() {
     function () {
       if (isAuthenticated) fetchPuntos(user.comunaId);
     },
-    [user, isAuthenticated]
+    [user.comunaId, isAuthenticated, fetchPuntos]
   );
 
   return (

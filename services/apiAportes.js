@@ -1,7 +1,7 @@
 import supabase, { supabaseUrl } from "./supabase";
 
 export async function getAllAportesApi(userId) {
-  const { data, error } = await supabase.from("evidencia").select("*").eq("userId", userId);
+  const { data, error } = await supabase.from("contribution").select("*").eq("userId", userId);
   if (error) {
     console.error(error);
     throw new Error("Evidencias could not be loaded");

@@ -12,7 +12,7 @@ function PuntoList() {
   const isAdmin = user?.role === "admin";
 
   if (isLoading) return <Spinner />;
-  if (!puntosList.length) return <Message message="Add your first city by clicking on a city on the map" />;
+  if (!puntosList.length) return <Message message="No tienes asignada ninguna comuna" />;
 
   return (
     <ul className={styles.cityList}>

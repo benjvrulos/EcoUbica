@@ -24,7 +24,7 @@ function reducer(state, action) {
   }
 }
 
-function AporteProvider({ children, userId }) {
+function AporteProvider({ children }) {
   const [{ aporteList, isLoading, currentAporte }, dispatch] = useReducer(reducer, initialState);
 
   async function getAllAportes(userId) {

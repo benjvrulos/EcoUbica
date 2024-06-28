@@ -80,7 +80,7 @@ function Map() {
             key={punto.id}
           >
             <Popup>
-              <span>Estado: {punto.estado ? punto.estado : "No hay información"}</span>
+              <span>Aportes : {0}</span>
             </Popup>
           </Marker>
         ))}

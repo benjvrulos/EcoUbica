@@ -11,9 +11,9 @@ function AporteLayout() {
 
   useEffect(
     function () {
-      if (isAuthenticated) getAllAportes(user.idUser);
+      if (isAuthenticated) getAllAportes(user.userId);
     },
-    [user, isAuthenticated]
+    [user.userId, isAuthenticated, getAllAportes]
   );
 
   if (!isAuthenticated)

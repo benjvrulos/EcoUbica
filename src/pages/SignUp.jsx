@@ -5,6 +5,7 @@ import Button from "../components/Button";
 import { useAuth } from "../contexts/UserProvider";
 
 import { useNavigate } from "react-router-dom";
+import Spinner from "../components/Spinner";
 
 export default function SignUp() {
   const navigate = useNavigate();
