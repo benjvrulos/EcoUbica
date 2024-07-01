@@ -13,7 +13,7 @@ function AppLayout() {
     function () {
       if (isAuthenticated) fetchPuntos(user.comunaId);
     },
-    [user.comunaId, isAuthenticated, fetchPuntos]
+    [user.comunaId, isAuthenticated]
   );
 
   return (

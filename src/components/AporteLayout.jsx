@@ -13,7 +13,7 @@ function AporteLayout() {
     function () {
       if (isAuthenticated) getAllAportes(user.userId);
     },
-    [user.userId, isAuthenticated, getAllAportes]
+    [user.userId, isAuthenticated]
   );
 
   if (!isAuthenticated)
