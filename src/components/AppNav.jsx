@@ -6,7 +6,10 @@ function AppNav() {
     <nav className={styles.nav}>
       <ul>
         <li>
-          <NavLink to="puntos">Todo</NavLink>
+          <NavLink to="resumen">Resumen</NavLink>
+        </li>
+        <li>
+          <NavLink to="puntos">Puntos</NavLink>
         </li>
 
         <li>

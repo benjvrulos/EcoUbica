@@ -5,15 +5,20 @@ import { useAuth } from "../contexts/UserProvider";
 import styles from "./AppLayout.module.css";
 import { usePuntos } from "../contexts/PuntosProvider";
 import { useEffect } from "react";
+import { useAportes } from "../contexts/AporteProvider";
 
 function AppLayout() {
   const { user, isAuthenticated } = useAuth();
   const { fetchPuntos } = usePuntos();
+  const { getAllAportes } = useAportes();
   useEffect(
     function () {
-      if (isAuthenticated) fetchPuntos(user.comunaId);
+      if (isAuthenticated) {
+        fetchPuntos(user.comunaId);
+        getAllAportes(user.userId);
+      }
     },
-    [user.comunaId, isAuthenticated]
+    [user.comunaId, user.userId, isAuthenticated]
   );
 
   return (

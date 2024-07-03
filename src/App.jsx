@@ -11,14 +11,13 @@ import PuntoList from "./components/PuntoList";
 import Form from "./components/Form";
 import Punto from "./components/Punto";
 import Account from "./components/Account";
-import AporteLayout from "./components/AporteLayout";
 import AporteList from "./components/AporteList";
 import FormAporte from "./components/FormAporte";
 
 import { PuntosProvider } from "./contexts/PuntosProvider";
 import { AuthProvider } from "./contexts/UserProvider";
 import { AporteProvider } from "./contexts/AporteProvider";
-import Aporte from "./components/APorte";
+import Aporte from "./components/Aporte";
 import ProtectedRoute from "./pages/ProtectedRoute";
 
 function App() {
@@ -91,25 +90,17 @@ function App() {
                 />
 
                 <Route
-                  element={
-                    <ProtectedRoute>
-                      <AporteLayout />
-                    </ProtectedRoute>
-                  }
-                >
-                  <Route
-                    path="form-evidencia"
-                    element={<FormAporte />}
-                  />
-                  <Route
-                    path="aportes"
-                    element={<AporteList />}
-                  />
-                  <Route
-                    path="aportes/:id"
-                    element={<Aporte />}
-                  />
-                </Route>
+                  path="form-evidencia"
+                  element={<FormAporte />}
+                />
+                <Route
+                  path="aportes"
+                  element={<AporteList />}
+                />
+                <Route
+                  path="aportes/:id"
+                  element={<Aporte />}
+                />
               </Route>
               <Route
                 path="*"

@@ -5,6 +5,13 @@ import { useNavigate, useParams } from "react-router-dom";
 import BackButton from "./BackButton";
 import Button from "./Button";
 
+const formatDate = (date) =>
+  new Intl.DateTimeFormat("es", {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  }).format(new Date(date));
+
 function Aporte() {
   const { aporteList } = useAportes();
 
@@ -12,7 +19,7 @@ function Aporte() {
   const navigate = useNavigate();
   const aporte = aporteList.find((contribution) => contribution.contributionId === Number(id));
 
-  const { responsableName, image, puntoId, contributionId } = aporte;
+  const { responsableName, image, puntoId, contributionId, created_at } = aporte;
 
   return (
     <div className={styles.city}>
@@ -20,17 +27,19 @@ function Aporte() {
         <div className={styles.row}>
           <h6>Responsable</h6>
           <p>{responsableName}</p>
-        </div>
-        {/* <div className={styles.row}>
-          <h6>Estado</h6>
-          <p>{estado.toUpperCase()}</p>
-        </div> */}
-      </div>
-
-      <div className={styles.headerAporte}>
-        <div className={styles.row}>
           <h6>Id Punto</h6>
           <p>{puntoId}</p>
+        </div>
+
+        <div className={styles.row}>
+          <h6>Fecha </h6>
+          <p>{formatDate(created_at)}</p>
+          <h6>Cantidad de materiales</h6>
+          {aporte.liquidPackagingBoardQuantity && <p>Cartón para liquidos: {aporte.liquidPackagingBoardQuantity} unidades</p>}
+          {aporte.metalQuantity && <p>Metal: {aporte.metalQuantity}kg</p>}
+          {aporte.paperAndCardboardQuantity && <p>Papel y cartón: {aporte.paperAndCardboardQuantity} unidades</p>}
+          {aporte.plasticQuantity && <p>Plástico: {aporte.plasticQuantity} unidades</p>}
+          {aporte.glassQuantity && <p>Vidrio: {aporte.glassQuantity}kg</p>}
         </div>
       </div>
 

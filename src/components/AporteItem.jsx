@@ -1,10 +1,10 @@
 import { Link } from "react-router-dom";
 import styles from "./ReciclajeItem.module.css";
 
-import RecyclingIcon from "@mui/icons-material/Recycling";
+import LocalShippingIcon from "@mui/icons-material/LocalShipping";
 
 function AporteItem({ aporte }) {
-  const { contributionId, resposableName } = aporte;
+  const { contributionId, responsableName } = aporte;
 
   return (
     <li>
@@ -12,9 +12,9 @@ function AporteItem({ aporte }) {
         className={`${styles.cityItem}`}
         to={`${contributionId}`}
       >
-        <RecyclingIcon />
-        <h3 className={styles.name}>ID Aporte: {contributionId}</h3>
-        <p className={styles.date}>{resposableName}</p>
+        <LocalShippingIcon />
+        <h3 className={styles.name}>{responsableName}</h3>
+        <p className={styles.date}>ID: {contributionId}</p>
       </Link>
     </li>
   );
