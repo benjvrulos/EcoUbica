@@ -6,32 +6,6 @@
   overflow: hidden;
 }
 
-/* Estilos barra (thumb) de scroll */
-.cardFlex::-webkit-scrollbar-thumb {
-  background: #ccc;
-  border-radius: 4px;
-}
-
-.cardFlex::-webkit-scrollbar-thumb:active {
-  background-color: #999999;
-}
-
-.cardFlex::-webkit-scrollbar-thumb:hover {
-  background: #b3b3b3;
-  box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.2);
-}
-
-/* Estilos track de scroll */
-.cardFlex::-webkit-scrollbar-track {
-  background: var(--color-dark--1);
-  border-radius: 4px;
-}
-
-.cardFlex::-webkit-scrollbar-track:hover,
-.cardFlex::-webkit-scrollbar-track:active {
-  background: var(--color-dark--1);
-}
-
 .cardIcon {
   display: flex;
   justify-content: center;

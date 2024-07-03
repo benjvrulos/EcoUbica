@@ -100,3 +100,17 @@
   font-family: inherit;
   font-size: 1.2rem;
 }
+
+.inputList {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  row-gap: 0.5rem;
+}
+
+.inputList label {
+  font-size: 1rem;
+}
+
+.inputList input {
+  height: 100%;
+}

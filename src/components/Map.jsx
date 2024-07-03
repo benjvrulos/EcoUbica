@@ -85,8 +85,6 @@ function Map() {
           </Marker>
         ))}
         <ChangeCenter position={mapPosition} />
-
-        {user?.role === "admin" && <DetectClick />}
       </MapContainer>
     </div>
   );
@@ -98,15 +96,15 @@ function ChangeCenter({ position }) {
   return null;
 }
 
-function DetectClick() {
-  const navigate = useNavigate();
-  useMapEvents({
-    click: (e) => {
-      const lat = e.latlng.lat;
-      const lng = e.latlng.lng;
+// function DetectClick() {
+//   const navigate = useNavigate();
+//   useMapEvents({
+//     click: (e) => {
+//       const lat = e.latlng.lat;
+//       const lng = e.latlng.lng;
 
-      navigate(`form?reverse=${true}&lat=${lat}&lng=${lng}`);
-    },
-  });
-}
+//       navigate(`form?reverse=${true}&lat=${lat}&lng=${lng}`);
+//     },
+//   });
+// }
 export default Map;

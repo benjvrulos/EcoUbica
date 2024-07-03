@@ -14,7 +14,7 @@ function AppLayout() {
   useEffect(
     function () {
       if (isAuthenticated) {
-        fetchPuntos(user.comunaId);
+        fetchPuntos();
         getAllAportes(user.userId);
       }
     },

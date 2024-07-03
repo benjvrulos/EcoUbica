@@ -13,9 +13,6 @@ import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { usePuntos } from "../contexts/PuntosProvider";
 import { useAuth } from "../contexts/UserProvider";
 
-const BASE_URL = "https://maps.googleapis.com/maps/api/geocode/json";
-const API_KEY = "AIzaSyDXPoPrJFxb3wDpyDCAuuddacMGesBd38U";
-
 function Form() {
   const { user } = useAuth();
 
@@ -23,72 +20,42 @@ function Form() {
   const { createPunto, isLoading } = usePuntos();
   const navigate = useNavigate();
 
-  const [searchParams] = useSearchParams();
   const [isLoadingGeocoding, setIsLoadingGeocoding] = useState(false);
-  const [tipoPunto, setTipoPunto] = useState("Reciclaje");
-  const [address, setAddress] = useState("");
 
+  const [address, setAddress] = useState("");
+  const [comuna, setComuna] = useState("");
   const [description, setDescription] = useState("");
 
+  const [hasLiquidPackagingBoard, setHasLiquidPackagingBoard] = useState(false);
+  const [hasMetal, setHasMetal] = useState(false);
+  const [hasPaperAndCardBoard, setHasPaperAndCardBoard] = useState(false);
+  const [hasPlastic, setHasPlastic] = useState(false);
+  const [hasGlass, setHasGlass] = useState(false);
   const [geoCodingError, setGeoCodingError] = useState("");
 
-  useEffect(
-    function () {
-      if (searchParams.get("reverse")) {
-        // Returns the estimate place with parameters lat and lng
-        async function fetchReverseGeocoding() {
-          try {
-            setIsLoadingGeocoding(true);
-            setGeoCodingError("");
-            const response = await fetch(`${BASE_URL}?latlng=${lat},${lng}&result_type=street_address&key=${API_KEY}`);
-            const data = await response.json();
-            console.log(data);
-
-            // if (!data.countryCode)
-            //   throw new Error(
-            //     "That doesn´t seem to be a city. Click somewhere else 😉"
-            //   );
-
-            setAddress(data.results[1].formatted_address);
-          } catch (err) {
-            setGeoCodingError(err.message);
-          } finally {
-            setIsLoadingGeocoding(false);
-          }
-        }
-
-        if (user) {
-          fetchReverseGeocoding();
-        }
-      }
-    },
-    [lat, lng, searchParams]
-  );
   async function handleSubmit(e) {
     e.preventDefault();
+
+    if (!address) return;
     if (!description) return;
 
-    const latNum = Number(lat);
-    const lngNum = Number(lng);
-    const newPunto = {
-      address,
-      tipoPunto,
-      description,
-      position: { lat: latNum, lng: lngNum },
-    };
-    await createPunto(newPunto, user.role);
-    navigate("/app/puntos");
+    // const latNum = Number(lat);
+    // const lngNum = Number(lng);
+    // const newPunto = {
+    //   address,
+
+    //   description,
+    //   position: { lat: latNum, lng: lngNum },
+    // };
+    // await createPunto(newPunto, user.role);
+    // navigate("/app/puntos");
   }
-  if (!user) {
-    return (
-      <>
-        <Message message="Ingresa para comenzar a agregar puntos de reciclaje"></Message>
-        <Link to="/login">
-          <Button type="primary">Ingresar</Button>
-        </Link>
-      </>
-    );
+
+  function setAddressAndComuna(address, comuna) {
+    setAddress(address);
+    setComuna(comuna);
   }
+
   if (isLoadingGeocoding) return <Spinner />;
   if (geoCodingError) return <Message message={geoCodingError} />;
 
@@ -100,21 +67,17 @@ function Form() {
       <div className={styles.row}>
         <label htmlFor="cityName">Dirección</label>
         <AutoComplete
-          onAdress={setAddress}
+          onAddress={setAddressAndComuna}
           address={address}
         />
       </div>
 
       <div className={styles.row}>
-        <label htmlFor="date">Tipo de Punto Limpio</label>
-        <select
-          id="date"
-          value={tipoPunto}
-          onChange={(e) => setTipoPunto(e.target.value)}
-        >
-          <option value="Reciclaje">Reciclaje</option>
-          <option value="Basural">Basural</option>
-        </select>
+        <label htmlFor="comunaName">Comuna</label>
+        <input
+          value={comuna}
+          disabled
+        />
       </div>
 
       <div className={styles.row}>
@@ -126,8 +89,54 @@ function Form() {
         />
       </div>
 
+      <div className={styles.row}>
+        <label>Materiales</label>
+
+        <div className={styles.inputList}>
+          <label htmlFor="hasLiquidPackagingBoard">Cartón para líquidos</label>
+          <input
+            id="hasLiquidPackagingBoard"
+            type="checkbox"
+            value={hasLiquidPackagingBoard}
+            onChange={() => setHasLiquidPackagingBoard((s) => !s)}
+          />
+
+          <label htmlFor="hasMetal">Metal</label>
+          <input
+            id="hasMetal"
+            type="checkbox"
+            value={hasMetal}
+            onChange={() => setHasMetal((s) => !s)}
+          />
+
+          <label htmlFor="hasPaperAndCardboard">Papel y cartón</label>
+          <input
+            id="hasPaperAndCardboard"
+            type="checkbox"
+            value={hasPaperAndCardBoard}
+            onChange={() => setHasPaperAndCardBoard((s) => !s)}
+          />
+
+          <label htmlFor="hasPlastic">Plástico</label>
+          <input
+            id="hasPlastic"
+            type="checkbox"
+            value={hasPlastic}
+            onChange={() => setHasPlastic((s) => !s)}
+          />
+
+          <label htmlFor="hasGlass">Vidrio</label>
+          <input
+            id="hasGlass"
+            type="checkbox"
+            value={hasGlass}
+            onChange={() => setHasGlass((s) => !s)}
+          />
+        </div>
+      </div>
+
       <div className={styles.buttons}>
-        <Button type="primary">{user.role === "admin" ? "Agregar" : "Solicitar"}</Button>
+        <Button type="primary">Agregar</Button>
         <BackButton />
       </div>
     </form>

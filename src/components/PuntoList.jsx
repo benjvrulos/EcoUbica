@@ -4,10 +4,13 @@ import Spinner from "./Spinner";
 import Message from "./Message";
 import { usePuntos } from "../contexts/PuntosProvider";
 import { useAuth } from "../contexts/UserProvider";
+import Button from "./Button";
+import { useNavigate } from "react-router-dom";
 
 function PuntoList() {
   const { puntosList, isLoading } = usePuntos();
   const { user } = useAuth();
+  const navigate = useNavigate();
 
   const isAdmin = user?.role === "admin";
 
@@ -23,6 +26,17 @@ function PuntoList() {
           role={isAdmin}
         />
       ))}
+      <Button
+        style={{ alignSelf: "center" }}
+        type="primary"
+        onClick={(e) => {
+          e.preventDefault();
+
+          navigate("/app/form");
+        }}
+      >
+        Agregar Punto
+      </Button>
     </ul>
   );
 }

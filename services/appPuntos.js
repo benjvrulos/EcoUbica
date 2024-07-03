@@ -1,7 +1,7 @@
 import supabase from "./supabase";
 
-export async function getPuntos(comunaId) {
-  const { data, error } = await supabase.from("puntos").select("*").eq("comunaId", comunaId);
+export async function getPuntos() {
+  const { data, error } = await supabase.from("puntos").select("*");
   if (error) {
     console.error(error);
     throw new Error("Puntos could not be loaded");

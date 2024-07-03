@@ -11,7 +11,12 @@ import StickyNote2Icon from "@mui/icons-material/StickyNote2";
 import LocalDiningIcon from "@mui/icons-material/LocalDining";
 function Resumen() {
   const { aporteList } = useAportes();
-  const { puntosList } = usePuntos();
+  const liquidPackagingBoardQuantity = aporteList.reduce((acum, aporte) => acum + aporte.liquidPackagingBoardQuantity, 0);
+  const metalQuantity = aporteList.reduce((acum, aporte) => acum + aporte.metalQuantity, 0);
+  const paperAndCardboardQuantity = aporteList.reduce((acum, aporte) => acum + aporte.paperAndCardboardQuantity, 0);
+  const plasticQuantity = aporteList.reduce((acum, aporte) => acum + aporte.plasticQuantity, 0);
+  const glassQuantity = aporteList.reduce((acum, aporte) => acum + aporte.glassQuantity, 0);
+
   return (
     <div className={styles.cardFlex}>
       <Card style={{ backgroundColor: "#42484d", color: "#fff", width: "90%", justifySelf: "self-start" }}>
@@ -28,7 +33,7 @@ function Resumen() {
           <span className={styles.cardIcon}>
             <LocalDrinkIcon sx={{ fontSize: 40 }} />
           </span>
-          <h1 style={{ textAlign: "center" }}>{aporteList.length}</h1>
+          <h1 style={{ textAlign: "center" }}>{liquidPackagingBoardQuantity}</h1>
           <p style={{ textAlign: "center" }}>Cartón para liquidos</p>
         </CardContent>
       </Card>
@@ -37,7 +42,7 @@ function Resumen() {
           <span className={styles.cardIcon}>
             <ConstructionIcon sx={{ fontSize: 40 }} />
           </span>
-          <h1 style={{ textAlign: "center" }}>{aporteList.length}</h1>
+          <h1 style={{ textAlign: "center" }}>{metalQuantity}</h1>
           <p style={{ textAlign: "center" }}>Metal</p>
         </CardContent>
       </Card>
@@ -46,7 +51,7 @@ function Resumen() {
           <span className={styles.cardIcon}>
             <StickyNote2Icon sx={{ fontSize: 40 }} />
           </span>
-          <h1 style={{ textAlign: "center" }}>{aporteList.length}</h1>
+          <h1 style={{ textAlign: "center" }}>{paperAndCardboardQuantity}</h1>
           <p style={{ textAlign: "center" }}>Papel y cartón</p>
         </CardContent>
       </Card>
@@ -55,7 +60,7 @@ function Resumen() {
           <span className={styles.cardIcon}>
             <LocalDiningIcon sx={{ fontSize: 40 }} />
           </span>
-          <h1 style={{ textAlign: "center" }}>{aporteList.length}</h1>
+          <h1 style={{ textAlign: "center" }}>{plasticQuantity}</h1>
           <p style={{ textAlign: "center" }}>Plástico</p>
         </CardContent>
       </Card>
@@ -64,7 +69,7 @@ function Resumen() {
           <span className={styles.cardIcon}>
             <WineBarIcon sx={{ fontSize: 40 }} />
           </span>
-          <h1 style={{ textAlign: "center" }}>{aporteList.length}</h1>
+          <h1 style={{ textAlign: "center" }}>{glassQuantity}</h1>
           <p style={{ textAlign: "center" }}>Vidrio</p>
         </CardContent>
       </Card>
