@@ -13,6 +13,7 @@ import Punto from "./components/Punto";
 import Account from "./components/Account";
 import AporteList from "./components/AporteList";
 import FormAporte from "./components/FormAporte";
+import Resumen from "./components/Resumen";
 
 import { PuntosProvider } from "./contexts/PuntosProvider";
 import { AuthProvider } from "./contexts/UserProvider";
@@ -67,6 +68,10 @@ function App() {
                 <Route
                   path="puntos"
                   element={<PuntoList />}
+                />
+                <Route
+                  path="resumen"
+                  element={<Resumen />}
                 />
                 <Route
                   path="puntos/:id"
