@@ -1,7 +1,7 @@
 import supabase, { supabaseUrl } from "./supabase";
 
-export async function getAllAportesApi(userId) {
-  const { data, error } = await supabase.from("contribution").select("*").eq("userId", userId);
+export async function getAllAportesApi() {
+  const { data, error } = await supabase.from("contribution").select("*");
   if (error) {
     console.error(error);
     throw new Error("Evidencias could not be loaded");
@@ -10,15 +10,25 @@ export async function getAllAportesApi(userId) {
   return data;
 }
 
-export async function createAporte(newEvidencia) {
-  console.log(newEvidencia);
-  const imageName = `punto/${newEvidencia.idPunto}.jpg`;
-  const imagePath = `${supabaseUrl}/storage/v1/object/public/evidenciaImages/${imageName}`;
+export async function createAporte(newContribution) {
+  const { image, ...others } = newContribution;
+  const { data: dataContribution, error } = await supabase.from("contribution").insert([others]).select().single();
 
-  console.log(imageName);
-  const { data, error } = await supabase.from("evidencia").insert([{ ...newEvidencia, image: imagePath }]);
+  const imageName = `contributionId-${dataContribution.contributionId}.jpg`;
+  const imagePath = `${supabaseUrl}/storage/v1/object/public/contributionImage/${imageName}`;
 
-  const { error: storageError } = await supabase.storage.from("evidenciaImages").upload(imageName, newEvidencia.image);
+  if (error) {
+    console.log("Error al insertar contribution");
+    return;
+  }
+
+  const { error: storageError } = await supabase.storage.from("contributionImage").upload(imageName, newContribution.image);
+  if (storageError) {
+    console.log(storageError);
+    return;
+  }
+
+  const { data } = await supabase.from("contribution").update({ image: imagePath }).eq("contributionId", dataContribution.contributionId).select().single();
 
   return data;
 }

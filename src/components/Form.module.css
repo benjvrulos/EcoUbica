@@ -6,6 +6,37 @@
   display: flex;
   flex-direction: column;
   gap: 2rem;
+  overflow-y: scroll;
+}
+
+.form::-webkit-scrollbar {
+  width: 8px;
+}
+
+/* Estilos barra (thumb) de scroll */
+.form::-webkit-scrollbar-thumb {
+  background: #ccc;
+  border-radius: 4px;
+}
+
+.form::-webkit-scrollbar-thumb:active {
+  background-color: #999999;
+}
+
+.form::-webkit-scrollbar-thumb:hover {
+  background: #b3b3b3;
+  box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.2);
+}
+
+/* Estilos track de scroll */
+.form::-webkit-scrollbar-track {
+  background: var(--color-dark--1);
+  border-radius: 4px;
+}
+
+.form::-webkit-scrollbar-track:hover,
+.form::-webkit-scrollbar-track:active {
+  background: var(--color-dark--1);
 }
 
 .row {

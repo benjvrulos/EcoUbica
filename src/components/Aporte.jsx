@@ -10,9 +10,9 @@ function Aporte() {
 
   const { id } = useParams();
   const navigate = useNavigate();
-  const aporte = aporteList.find((evidencia) => evidencia.idEvidencia === Number(id));
+  const aporte = aporteList.find((contribution) => contribution.contributionId === Number(id));
 
-  const { responsableName, estado, image, idPunto } = aporte;
+  const { responsableName, image, puntoId, contributionId } = aporte;
 
   return (
     <div className={styles.city}>
@@ -21,16 +21,16 @@ function Aporte() {
           <h6>Responsable</h6>
           <p>{responsableName}</p>
         </div>
-        <div className={styles.row}>
+        {/* <div className={styles.row}>
           <h6>Estado</h6>
           <p>{estado.toUpperCase()}</p>
-        </div>
+        </div> */}
       </div>
 
       <div className={styles.headerAporte}>
         <div className={styles.row}>
           <h6>Id Punto</h6>
-          <p>{idPunto}</p>
+          <p>{puntoId}</p>
         </div>
       </div>
 
@@ -40,6 +40,7 @@ function Aporte() {
           <img
             className={styles.aporteImg}
             src={image}
+            alt={contributionId}
           />
         </div>
       )}
@@ -49,7 +50,7 @@ function Aporte() {
           onClick={(e) => {
             e.preventDefault();
 
-            navigate(`/app/puntos/${idPunto}`);
+            navigate(`/app/puntos/${puntoId}`);
           }}
           type="primary"
         >
