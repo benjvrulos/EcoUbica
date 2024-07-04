@@ -13,6 +13,10 @@ import { createAporte } from "../../services/apiAportes";
 function FormAporte() {
   const { user } = useAuth();
   const { currentPunto } = usePuntos();
+
+  const [totalError, setTotalError] = useState(false);
+  const [responsableError, setResponsableError] = useState(false);
+  const [imageError, setImageError] = useState(false);
   const [evidenceFile, setEvidenceFile] = useState(null);
   const [responsableName, setResponsableName] = useState("");
   const [liquidPackagingBoardQuantity, setLiquidPackagingBoard] = useState(currentPunto.hasLiquidPackagingBoard ? 0 : null);
@@ -23,21 +27,30 @@ function FormAporte() {
 
   async function handleSubmit(e) {
     e.preventDefault();
-
     const total = (liquidPackagingBoardQuantity || 0) + (metalQuantity || 0) + (paperAndCardboardQuantity || 0) + (plasticQuantity || 0) + (glassQuantity || 0);
 
     if (responsableName.length < 6) {
-      console.log("Incluya su nombre y apellido");
-      return;
-    }
-    if (total <= 0) {
-      console.log("El total del aporte no puede ser 0");
-      return;
+      setResponsableError(true);
+    } else {
+      setResponsableError(false);
     }
 
     if (!evidenceFile) {
-      console.log("No existe imagen");
+      setImageError(true);
+    } else {
+      setImageError(false);
     }
+
+    if (total <= 0) {
+      setTotalError(true);
+    } else {
+      setTotalError(false);
+    }
+
+    if (responsableError || imageError || totalError) {
+      return;
+    }
+
     const newAporte = {
       puntoId: currentPunto.id,
       responsableName,
@@ -84,6 +97,7 @@ function FormAporte() {
           value={responsableName}
           onChange={(e) => setResponsableName(e.target.value)}
         />
+        {responsableError && <p>El nombre del responsable deber ser mayor a 6 caracteres</p>}
       </div>
       {currentPunto.hasLiquidPackagingBoard && (
         <div className={styles.row}>
@@ -93,6 +107,7 @@ function FormAporte() {
             value={liquidPackagingBoardQuantity}
             onChange={(e) => setLiquidPackagingBoard(Number(e.target.value))}
           />
+          {}
         </div>
       )}
       {currentPunto.hasMetal && (
@@ -137,6 +152,7 @@ function FormAporte() {
           />
         </div>
       )}
+      {totalError && <p>El total del aporte debe ser mayor a 0</p>}
 
       <div className={styles.containerFile}>
         <label
@@ -154,6 +170,8 @@ function FormAporte() {
           id="image_uploads"
           onChange={(e) => setEvidenceFile(e.target.files[0])}
         />
+
+        {imageError && <p>Se debe ingresar una evidencia</p>}
       </div>
 
       <div className={styles.buttons}>

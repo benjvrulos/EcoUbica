@@ -41,6 +41,7 @@ function Form() {
 
     const latNum = Number(lat);
     const lngNum = Number(lng);
+    console.log(comuna);
 
     let { data: comunaData, error } = await supabase.from("comuna").select("*").eq("comunaName", comuna);
     const comunaId = comunaData[0].comunaId;

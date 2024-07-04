@@ -21,6 +21,7 @@ function Aporte() {
 
   const { responsableName, image, puntoId, contributionId, created_at } = aporte;
 
+  console.log(0 ? "si existe" : "no existe");
   return (
     <div className={styles.city}>
       <div className={styles.headerAporte}>
@@ -35,11 +36,11 @@ function Aporte() {
           <h6>Fecha </h6>
           <p>{formatDate(created_at)}</p>
           <h6>Cantidad de materiales</h6>
-          {aporte.liquidPackagingBoardQuantity && <p>Cartón para liquidos: {aporte.liquidPackagingBoardQuantity} unidades</p>}
-          {aporte.metalQuantity && <p>Metal: {aporte.metalQuantity}kg</p>}
-          {aporte.paperAndCardboardQuantity && <p>Papel y cartón: {aporte.paperAndCardboardQuantity} unidades</p>}
-          {aporte.plasticQuantity && <p>Plástico: {aporte.plasticQuantity} unidades</p>}
-          {aporte.glassQuantity && <p>Vidrio: {aporte.glassQuantity}kg</p>}
+          {aporte.liquidPackagingBoardQuantity !== null && <p>Cartón para liquidos: {aporte.liquidPackagingBoardQuantity} unidades</p>}
+          {aporte.metalQuantity !== null && <p>Metal: {aporte.metalQuantity}kg</p>}
+          {aporte.paperAndCardboardQuantity !== null && <p>Papel y cartón: {aporte.paperAndCardboardQuantity} unidades</p>}
+          {aporte.plasticQuantity !== null && <p>Plástico: {aporte.plasticQuantity} unidades</p>}
+          {aporte.glassQuantity !== null && <p>Vidrio: {aporte.glassQuantity}kg</p>}
         </div>
       </div>
 

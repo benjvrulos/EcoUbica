@@ -27,11 +27,24 @@ function reducer(state, action) {
 function AporteProvider({ children }) {
   const [{ aporteList, isLoading, currentAporte }, dispatch] = useReducer(reducer, initialState);
 
-  async function getAllAportes(userId) {
+  async function getAllAportes() {
     dispatch({ type: "loading" });
 
     try {
-      const data = await getAllAportesApi(userId);
+      const data = await getAllAportesApi();
+      dispatch({ type: "aportes/loaded", payload: data });
+    } catch (error) {
+      dispatch({
+        type: "rejected",
+        payload: "Contraseña o email incorrecto",
+      });
+    }
+  }
+
+  async function createAporte() {
+    dispatch({ type: "loading" });
+    try {
+      const data = await getAllAportesApi();
       dispatch({ type: "aportes/loaded", payload: data });
     } catch (error) {
       dispatch({
