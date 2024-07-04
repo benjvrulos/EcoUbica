@@ -10,13 +10,17 @@ export default function Login() {
   // PRE-FILL FOR DEV PURPOSES
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { login, isAuthenticated, isLoading } = useAuth();
+  const { login, isAuthenticated, isLoading, error, setError } = useAuth();
   const navigate = useNavigate();
-
+  console.log(error);
   function handleSubmit(e) {
     e.preventDefault();
 
-    if (email && password) login(email, password);
+    if (email && password) {
+      login(email, password);
+    } else {
+      setError();
+    }
   }
   useEffect(() => {
     if (isAuthenticated) navigate("/app", { replace: true });
@@ -51,6 +55,7 @@ export default function Login() {
               value={password}
             />
           </div>
+          {error && <p>{error}</p>}
 
           <div>
             <Button type="primary">Login</Button>

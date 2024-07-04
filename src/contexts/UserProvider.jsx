@@ -6,7 +6,7 @@ const AuthContext = createContext();
 const initialState = {
   user: null,
   isAuthenticated: false,
-  error: {},
+  error: "",
   isLoading: false,
 };
 
@@ -15,9 +15,9 @@ function reducer(state, action) {
     case "loading":
       return { ...state, isLoading: true };
     case "login":
-      return { ...state, user: action.payload, isAuthenticated: true, isLoading: false };
+      return { ...state, user: action.payload, isAuthenticated: true, isLoading: false, error: "" };
     case "sign-up":
-      return { ...state, user: action.payload, isAuthenticated: true, isLoading: false };
+      return { ...state, user: action.payload, isAuthenticated: true, isLoading: false, error: "" };
     case "logout":
       return { ...state, user: null, isAuthenticated: false };
     case "rejected":
@@ -28,7 +28,7 @@ function reducer(state, action) {
 }
 
 function AuthProvider({ children }) {
-  const [{ user, isAuthenticated }, dispatch] = useReducer(reducer, initialState);
+  const [{ user, isAuthenticated, error }, dispatch] = useReducer(reducer, initialState);
 
   async function login(email, password) {
     dispatch({ type: "loading" });
@@ -80,7 +80,11 @@ function AuthProvider({ children }) {
       });
     }
   }
-  return <AuthContext.Provider value={{ user, isAuthenticated, login, logout, signUp }}>{children}</AuthContext.Provider>;
+
+  function setError() {
+    dispatch({ type: "rejected", payload: "No ingresaste correo o contraseña" });
+  }
+  return <AuthContext.Provider value={{ user, isAuthenticated, login, logout, signUp, error, setError }}>{children}</AuthContext.Provider>;
 }
 
 function useAuth() {
