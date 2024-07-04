@@ -8,7 +8,7 @@ function AporteList() {
   const { aporteList, isLoading } = useAportes();
 
   if (isLoading) return <Spinner />;
-  if (!aporteList.length) return <Message message="No tienes aportes solicitados" />;
+  if (!aporteList.length) return <Message message="No existen aportes" />;
 
   return (
     <ul className={styles.cityList}>

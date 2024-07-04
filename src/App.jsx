@@ -1,7 +1,4 @@
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
-
-import Product from "./pages/Product";
-import Pricing from "./pages/Pricing";
 import Homepage from "./pages/Homepage";
 import Login from "./pages/Login";
 import SignUp from "./pages/SignUp";
@@ -32,14 +29,7 @@ function App() {
                 index
                 element={<Homepage />}
               />
-              <Route
-                path="product"
-                element={<Product />}
-              />
-              <Route
-                path="pricing"
-                element={<Pricing />}
-              />
+
               <Route
                 path="login"
                 element={<Login />}
