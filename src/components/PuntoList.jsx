@@ -26,17 +26,20 @@ function PuntoList() {
           role={isAdmin}
         />
       ))}
-      <Button
-        style={{ alignSelf: "center" }}
-        type="primary"
-        onClick={(e) => {
-          e.preventDefault();
 
-          navigate("/app/form");
-        }}
-      >
-        Agregar Punto
-      </Button>
+      {user.role === "admin" && (
+        <Button
+          style={{ alignSelf: "center" }}
+          type="primary"
+          onClick={(e) => {
+            e.preventDefault();
+
+            navigate("/app/form");
+          }}
+        >
+          Agregar Punto
+        </Button>
+      )}
     </ul>
   );
 }

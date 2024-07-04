@@ -1,6 +1,6 @@
 // "https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=0&longitude=0"
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 import styles from "./Form.module.css";
 import Button from "./Button";
@@ -9,13 +9,13 @@ import Spinner from "./Spinner";
 import BackButton from "./BackButton";
 import { AutoComplete } from "./AutoComplete";
 import { useUrlPosition } from "../hooks/useUrlPosition";
-import { Link, useNavigate, useSearchParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { usePuntos } from "../contexts/PuntosProvider";
+import supabase from "../../services/supabase";
 import { useAuth } from "../contexts/UserProvider";
 
 function Form() {
   const { user } = useAuth();
-
   const [lat, lng] = useUrlPosition();
   const { createPunto, isLoading } = usePuntos();
   const navigate = useNavigate();
@@ -28,10 +28,10 @@ function Form() {
 
   const [hasLiquidPackagingBoard, setHasLiquidPackagingBoard] = useState(false);
   const [hasMetal, setHasMetal] = useState(false);
-  const [hasPaperAndCardBoard, setHasPaperAndCardBoard] = useState(false);
+  const [hasPaperAndCardboard, setHasPaperAndCardboard] = useState(false);
   const [hasPlastic, setHasPlastic] = useState(false);
   const [hasGlass, setHasGlass] = useState(false);
-  const [geoCodingError, setGeoCodingError] = useState("");
+  const [geoCodingError] = useState("");
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -39,16 +39,24 @@ function Form() {
     if (!address) return;
     if (!description) return;
 
-    // const latNum = Number(lat);
-    // const lngNum = Number(lng);
-    // const newPunto = {
-    //   address,
+    const latNum = Number(lat);
+    const lngNum = Number(lng);
 
-    //   description,
-    //   position: { lat: latNum, lng: lngNum },
-    // };
-    // await createPunto(newPunto, user.role);
-    // navigate("/app/puntos");
+    let { data: comunaData, error } = await supabase.from("comuna").select("*").eq("comunaName", comuna);
+    const comunaId = comunaData[0].comunaId;
+    const newPunto = {
+      comunaId,
+      address,
+      description,
+      position: { lat: latNum, lng: lngNum },
+      hasLiquidPackagingBoard,
+      hasMetal,
+      hasPaperAndCardboard,
+      hasPlastic,
+      hasGlass,
+    };
+    await createPunto(newPunto, user.role);
+    navigate("/app/puntos");
   }
 
   function setAddressAndComuna(address, comuna) {
@@ -113,8 +121,8 @@ function Form() {
           <input
             id="hasPaperAndCardboard"
             type="checkbox"
-            value={hasPaperAndCardBoard}
-            onChange={() => setHasPaperAndCardBoard((s) => !s)}
+            value={hasPaperAndCardboard}
+            onChange={() => setHasPaperAndCardboard((s) => !s)}
           />
 
           <label htmlFor="hasPlastic">Plástico</label>

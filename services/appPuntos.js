@@ -33,12 +33,11 @@ export async function createPunto(punto, role) {
   let puntoCreated;
   switch (role) {
     case "admin":
-      puntoCreated = { ...punto, aceptado: true };
+      puntoCreated = punto;
       break;
 
     case "user":
-      puntoCreated = punto;
-      break;
+      return;
     default:
       throw new Error("Unknown role");
   }
