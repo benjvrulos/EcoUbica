@@ -1,5 +1,7 @@
-import { createContext, useContext, useReducer } from "react";
+import { createContext, useContext, useEffect, useReducer } from "react";
 import { createAccount, fetchAccount, loginApi, logoutApi, signUpApi } from "../../services/apiUsers";
+import supabase from "../../services/supabase";
+import LoginSpinner from "../components/LoginSpinner";
 
 const AuthContext = createContext();
 
@@ -19,7 +21,7 @@ function reducer(state, action) {
     case "sign-up":
       return { ...state, user: action.payload, isAuthenticated: true, isLoading: false, error: "" };
     case "logout":
-      return { ...state, user: null, isAuthenticated: false };
+      return { ...state, isLoading: false, user: null, isAuthenticated: false };
     case "rejected":
       return { ...state, isLoading: false, error: action.payload };
     default:
@@ -28,7 +30,28 @@ function reducer(state, action) {
 }
 
 function AuthProvider({ children }) {
-  const [{ user, isAuthenticated, error }, dispatch] = useReducer(reducer, initialState);
+  const [{ user, isAuthenticated, error, isLoading }, dispatch] = useReducer(reducer, initialState);
+
+  useEffect(() => {
+    async function getSessionApi() {
+      dispatch({ type: "loading" });
+      const { data } = await supabase.auth.getSession();
+
+      if (!data.session) {
+        dispatch({ type: "logout" });
+      }
+      const account = await fetchAccount(data.session.user.id);
+      const accountFull = { ...account[0], email: data.session.user.email };
+      dispatch({ type: "login", payload: accountFull });
+    }
+
+    getSessionApi();
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, session) => {});
+
+    return () => subscription.unsubscribe();
+  }, []);
 
   async function login(email, password) {
     dispatch({ type: "loading" });
@@ -64,8 +87,6 @@ function AuthProvider({ children }) {
         payload: "Contraseña o email incorrecto",
       });
     }
-
-    // return data.user;
   }
 
   async function logout() {
@@ -84,6 +105,8 @@ function AuthProvider({ children }) {
   function setError() {
     dispatch({ type: "rejected", payload: "No ingresaste correo o contraseña" });
   }
+  if (isLoading) return <LoginSpinner />;
+
   return <AuthContext.Provider value={{ user, isAuthenticated, login, logout, signUp, error, setError }}>{children}</AuthContext.Provider>;
 }
 

@@ -1,0 +1,7 @@
+.allPage {
+  height: 100vh;
+  background-color: var(--color-dark--1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
