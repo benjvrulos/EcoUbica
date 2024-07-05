@@ -18,6 +18,15 @@ export async function getPunto(id) {
   return data[0];
 }
 
+export async function getAllComunasApi() {
+  let { data: comuna, error } = await supabase.from("comuna").select("");
+  if (error) {
+    console.error(error);
+    throw new Error("Punto could not be loaded");
+  }
+  return comuna;
+}
+
 export async function deletePunto(id) {
   const { error } = await supabase.from("puntos").delete().eq("id", id);
 
