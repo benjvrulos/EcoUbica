@@ -18,18 +18,20 @@ function PuntoList() {
   if (!puntosList.length) return <Message message="No tienes asignada ninguna comuna" />;
 
   return (
-    <ul className={styles.cityList}>
-      {filteredPuntos.map((punto) => (
-        <PuntoItem
-          punto={punto}
-          key={punto.id}
-          role={isAdmin}
-        />
-      ))}
+    <>
+      <ul className={styles.cityList}>
+        {filteredPuntos.map((punto) => (
+          <PuntoItem
+            punto={punto}
+            key={punto.id}
+            role={isAdmin}
+          />
+        ))}
+      </ul>
 
       {user.role === "admin" && (
         <Button
-          style={{ alignSelf: "center" }}
+          style={{ alignSelf: "center", marginTop: "1rem" }}
           type="primary"
           onClick={(e) => {
             e.preventDefault();
@@ -40,7 +42,7 @@ function PuntoList() {
           Agregar Punto
         </Button>
       )}
-    </ul>
+    </>
   );
 }
 
