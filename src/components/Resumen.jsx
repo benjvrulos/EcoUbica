@@ -1,7 +1,6 @@
-import { Card, CardContent, CardHeader } from "@mui/material";
+import { Card, CardContent } from "@mui/material";
 import { useAportes } from "../contexts/AporteProvider";
 import styles from "./Resumen.module.css";
-import { usePuntos } from "../contexts/PuntosProvider";
 
 import LocalShippingIcon from "@mui/icons-material/LocalShipping";
 import ConstructionIcon from "@mui/icons-material/Construction";
@@ -9,13 +8,16 @@ import LocalDrinkIcon from "@mui/icons-material/LocalDrink";
 import WineBarIcon from "@mui/icons-material/WineBar";
 import StickyNote2Icon from "@mui/icons-material/StickyNote2";
 import LocalDiningIcon from "@mui/icons-material/LocalDining";
+import { useOutletContext } from "react-router-dom";
 function Resumen() {
   const { aporteList } = useAportes();
-  const liquidPackagingBoardQuantity = aporteList.reduce((acum, aporte) => acum + aporte.liquidPackagingBoardQuantity, 0);
-  const metalQuantity = aporteList.reduce((acum, aporte) => acum + aporte.metalQuantity, 0);
-  const paperAndCardboardQuantity = aporteList.reduce((acum, aporte) => acum + aporte.paperAndCardboardQuantity, 0);
-  const plasticQuantity = aporteList.reduce((acum, aporte) => acum + aporte.plasticQuantity, 0);
-  const glassQuantity = aporteList.reduce((acum, aporte) => acum + aporte.glassQuantity, 0);
+  const [filteredComuna] = useOutletContext();
+  const aporteFiltered = filteredComuna === 0 ? aporteList : aporteList.filter((aporte) => aporte.puntos.comunaId === filteredComuna);
+  const liquidPackagingBoardQuantity = aporteFiltered.reduce((acum, aporte) => acum + aporte.liquidPackagingBoardQuantity, 0);
+  const metalQuantity = aporteFiltered.reduce((acum, aporte) => acum + aporte.metalQuantity, 0);
+  const paperAndCardboardQuantity = aporteFiltered.reduce((acum, aporte) => acum + aporte.paperAndCardboardQuantity, 0);
+  const plasticQuantity = aporteFiltered.reduce((acum, aporte) => acum + aporte.plasticQuantity, 0);
+  const glassQuantity = aporteFiltered.reduce((acum, aporte) => acum + aporte.glassQuantity, 0);
 
   return (
     <div className={styles.cardFlex}>
@@ -24,7 +26,7 @@ function Resumen() {
           <span className={styles.cardIcon}>
             <LocalShippingIcon sx={{ fontSize: 40 }} />
           </span>
-          <h1 style={{ textAlign: "center" }}>{aporteList.length}</h1>
+          <h1 style={{ textAlign: "center" }}>{aporteFiltered.length}</h1>
           <p style={{ textAlign: "center" }}>Total de Aportes</p>
         </CardContent>
       </Card>

@@ -13,9 +13,3 @@
 .cityList::-webkit-scrollbar {
   width: 0;
 }
-
-.filter {
-  display: flex;
-  width: 70%;
-  margin-bottom: 2rem;
-}

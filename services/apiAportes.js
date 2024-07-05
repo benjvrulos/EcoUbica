@@ -1,7 +1,8 @@
 import supabase, { supabaseUrl } from "./supabase";
 
 export async function getAllAportesApi() {
-  const { data, error } = await supabase.from("contribution").select("*");
+  const { data, error } = await supabase.from("contribution").select(`*,puntos(comunaId)`);
+
   if (error) {
     console.error(error);
     throw new Error("Evidencias could not be loaded");
