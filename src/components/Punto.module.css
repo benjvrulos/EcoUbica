@@ -3,12 +3,44 @@
   max-height: 75%;
   background-color: var(--color-dark--2);
   border-radius: 7px;
+
   /* overflow: scroll; */
 
   width: 100%;
   display: flex;
   flex-direction: column;
   gap: 2rem;
+  overflow-y: scroll;
+}
+
+.city::-webkit-scrollbar {
+  width: 8px;
+}
+
+/* Estilos barra (thumb) de scroll */
+.city::-webkit-scrollbar-thumb {
+  background: #ccc;
+  border-radius: 4px;
+}
+
+.city::-webkit-scrollbar-thumb:active {
+  background-color: #999999;
+}
+
+.city::-webkit-scrollbar-thumb:hover {
+  background: #b3b3b3;
+  box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.2);
+}
+
+/* Estilos track de scroll */
+.city::-webkit-scrollbar-track {
+  background: var(--color-dark--1);
+  border-radius: 4px;
+}
+
+.city::-webkit-scrollbar-track:hover,
+.city::-webkit-scrollbar-track:active {
+  background: var(--color-dark--1);
 }
 
 .row {

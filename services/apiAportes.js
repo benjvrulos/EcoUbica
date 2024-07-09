@@ -11,7 +11,7 @@ export async function getAllAportesApi() {
   return data;
 }
 
-export async function createAporte(newContribution) {
+export async function createAporteApi(newContribution) {
   const { image, ...others } = newContribution;
   const { data: dataContribution, error } = await supabase.from("contribution").insert([others]).select().single();
 

@@ -1,5 +1,5 @@
 import { createContext, useContext, useReducer } from "react";
-import { getAllAportesApi } from "../../services/apiAportes";
+import { getAllAportesApi, createAporteApi } from "../../services/apiAportes";
 
 const AporteContext = createContext();
 
@@ -17,6 +17,9 @@ function reducer(state, action) {
       return { ...state, isLoading: false, aporteList: action.payload };
     case "aporte/loaded":
       return { ...state, isLoading: false, currentAporte: action.payload };
+    case "aporte/created":
+      return { ...state, isLoading: false, currentAporte: action.payload, aporteList: [...state.aporteList, action.payload] };
+
     case "rejected":
       return { ...state, isLoading: false, error: action.payload };
     default:
@@ -25,7 +28,7 @@ function reducer(state, action) {
 }
 
 function AporteProvider({ children }) {
-  const [{ aporteList, isLoading, currentAporte }, dispatch] = useReducer(reducer, initialState);
+  const [{ aporteList, isLoading }, dispatch] = useReducer(reducer, initialState);
 
   async function getAllAportes() {
     dispatch({ type: "loading" });
@@ -41,11 +44,11 @@ function AporteProvider({ children }) {
     }
   }
 
-  async function createAporte() {
+  async function createAporte(newContribution) {
     dispatch({ type: "loading" });
     try {
-      const data = await getAllAportesApi();
-      dispatch({ type: "aportes/loaded", payload: data });
+      const data = await createAporteApi(newContribution);
+      dispatch({ type: "aporte/created", payload: data });
     } catch (error) {
       dispatch({
         type: "rejected",
@@ -60,6 +63,7 @@ function AporteProvider({ children }) {
         getAllAportes,
         aporteList,
         isLoading,
+        createAporte,
       }}
     >
       {children}

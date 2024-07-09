@@ -21,7 +21,6 @@ function Aporte() {
 
   const { responsableName, image, puntoId, contributionId, created_at } = aporte;
 
-  console.log(0 ? "si existe" : "no existe");
   return (
     <div className={styles.city}>
       <div className={styles.headerAporte}>

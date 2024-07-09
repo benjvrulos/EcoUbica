@@ -1,19 +1,20 @@
 import { useState } from "react";
 import { useAuth } from "../contexts/UserProvider";
 import { usePuntos } from "../contexts/PuntosProvider";
+import { useAportes } from "../contexts/AporteProvider";
 
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import styles from "./Form.module.css";
 import BackButton from "./BackButton";
 import Button from "./Button";
 import FileUploadIcon from "@mui/icons-material/FileUpload";
 import Message from "./Message";
-import { createAporte } from "../../services/apiAportes";
 
 function FormAporte() {
+  const navigate = useNavigate();
   const { user } = useAuth();
   const { currentPunto } = usePuntos();
-
+  const { createAporte } = useAportes();
   const [totalError, setTotalError] = useState(false);
   const [responsableError, setResponsableError] = useState(false);
   const [imageError, setImageError] = useState(false);
@@ -47,7 +48,7 @@ function FormAporte() {
       setTotalError(false);
     }
 
-    if (responsableError || imageError || totalError) {
+    if (responsableName.length < 6 || !evidenceFile || total <= 0) {
       return;
     }
 
@@ -64,6 +65,7 @@ function FormAporte() {
     };
 
     const resp = await createAporte(newAporte);
+    navigate("/app/aportes");
   }
 
   if (!user) {
