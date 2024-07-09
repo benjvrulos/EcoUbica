@@ -1,13 +1,18 @@
 import { NavLink } from "react-router-dom";
 import styles from "./AppNav.module.css";
+import { useAuth } from "../contexts/UserProvider";
 
 function AppNav() {
+  const { user } = useAuth();
   return (
     <nav className={styles.nav}>
       <ul>
-        <li>
-          <NavLink to="resumen">Resumen</NavLink>
-        </li>
+        {user.role === "admin" && (
+          <li>
+            <NavLink to="resumen">Resumen</NavLink>
+          </li>
+        )}
+
         <li>
           <NavLink to="puntos">Puntos</NavLink>
         </li>
